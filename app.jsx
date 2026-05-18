@@ -125,18 +125,14 @@ const ChapterNav = ({ activeId }) => {
     <nav className="chapter-nav-container" style={{ zIndex: 900 }}>
       <style dangerouslySetInnerHTML={{ __html: `
         .chapter-nav-container { position: fixed; left: 24px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 16px; }
-        .nav-item { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .nav-item { display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 12px 0; cursor: pointer; }
         .nav-label { font-family: var(--ff-ui); font-size: 11px; color: var(--cream-30); opacity: 0; transition: opacity 0.3s var(--ease-out); text-transform: uppercase; letter-spacing: 0.05em; }
         .nav-item:hover .nav-label, .nav-item.active .nav-label { opacity: 1; color: var(--cream); }
         .nav-dot { width: 4px; height: 4px; border-radius: 2px; background-color: var(--cream-30); transition: all 0.3s var(--ease-out); display: flex; align-items: center; justify-content: center; color: transparent; font-family: var(--ff-mono); font-size: 14px; }
         .nav-item.active .nav-dot { width: 20px; background-color: var(--orange); }
         
         @media (max-width: 768px) {
-          .chapter-nav-container { left: 50%; top: auto; bottom: 24px; transform: translateX(-50%); flex-direction: row; gap: 8px; background: rgba(20, 18, 16, 0.8); backdrop-filter: blur(10px); padding: 8px; border-radius: 40px; border: 1px solid var(--border); }
-          .nav-label { display: none; }
-          .nav-item.active .nav-label { display: none; }
-          .nav-dot { width: 44px; height: 44px; border-radius: 50%; background-color: transparent; border: 1px solid var(--border); color: var(--cream-60); transition: background-color 0.3s, color 0.3s; }
-          .nav-item.active .nav-dot { width: 44px; background-color: var(--orange); border-color: var(--orange); color: var(--cream); }
+          .chapter-nav-container { display: none; }
         }
       `}} />
       {CHAPTERS.map((chapter, index) => {
@@ -188,7 +184,21 @@ const Hero = () => {
       position: 'relative',
       background: 'radial-gradient(circle at bottom left, rgba(196, 82, 42, 0.15) 0%, transparent 50%)'
     }}>
-      <div className="col-read" style={{ margin: '0', paddingLeft: '48px' /* Offset for nav */ }}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .hero-content { margin: 0; padding-left: 48px; }
+        .hero-scroll { position: absolute; bottom: 48px; right: 48px; font-family: var(--ff-mono); font-size: 9px; color: var(--cream-30); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+          40% { transform: translateY(-10px); }
+          60% { transform: translateY(-5px); }
+        }
+        @media (max-width: 768px) {
+          .hero-content { padding-left: 0; }
+          .hero-scroll { display: none; }
+        }
+      `}} />
+
+      <div className="col-read hero-content">
         <p style={{
           fontFamily: 'var(--ff-ui)',
           fontSize: '11px',
@@ -224,31 +234,12 @@ const Hero = () => {
         </p>
       </div>
 
-      <div style={{
-        position: 'absolute',
-        bottom: '48px',
-        right: '48px',
-        fontFamily: 'var(--ff-mono)',
-        fontSize: '9px',
-        color: 'var(--cream-30)',
+      <div className="hero-scroll" style={{
         opacity: scrolled ? 0 : 1,
-        transition: 'opacity 0.3s ease',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '8px'
+        transition: 'opacity 0.3s ease'
       }}>
         <span style={{ animation: 'bounce 2s infinite' }}>↓</span>
         SCROLL
-        <style>
-          {`
-            @keyframes bounce {
-              0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-              40% { transform: translateY(-10px); }
-              60% { transform: translateY(-5px); }
-            }
-          `}
-        </style>
       </div>
     </section>
   );
@@ -394,7 +385,7 @@ const Chapter01 = () => {
       </p>
 
       {/* CHART 1 */}
-      <div style={{ width: '100%', height: '400px', marginBottom: '16px', position: 'relative' }}>
+      <div style={{ width: '100%', height: '400px', marginBottom: '16px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '16px' }}>
           <h3 style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: 'var(--cream-30)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
             PUMP PRICE VS REAL COST — DIESEL (Jan 2020 – May 2026)
@@ -404,9 +395,10 @@ const Chapter01 = () => {
           </span>
         </div>
         
-        <div aria-label="Line chart comparing Diesel Pump Price vs Real Cost Formula from January 2020 to May 2026" tabIndex="0" style={{ height: '100%', width: '100%', outline: 'none' }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={CHART_1_DATA} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+        <div aria-label="Line chart comparing Diesel Pump Price vs Real Cost Formula from January 2020 to May 2026" tabIndex="0" style={{ flexGrow: 1, position: 'relative', width: '100%', outline: 'none' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={CHART_1_DATA} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
               <XAxis 
                 dataKey="date" 
@@ -458,6 +450,7 @@ const Chapter01 = () => {
               <Line type="monotone" dataKey="pump" name="Pump Price" stroke="var(--orange)" strokeWidth={2.5} dot={false} activeDot={{ r: 6, fill: 'var(--orange)', stroke: 'var(--bg)', strokeWidth: 2 }} />
             </ComposedChart>
           </ResponsiveContainer>
+          </div>
         </div>
         <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '9px', color: 'var(--cream-30)', marginTop: '8px', textAlign: 'right' }}>
           Verité Research · CEYPETCO historical prices
@@ -526,18 +519,35 @@ const Chapter02 = () => {
         <span className="section-label">CHAPTER 02 · SIX YEARS OF DATA</span>
       </div>
 
+      <style dangerouslySetInnerHTML={{ __html: `
+        .scrolly-layout { display: flex; flex-wrap: wrap; position: relative; margin-top: 48px; }
+        .scrolly-text-col { flex: 1 1 300px; padding-right: 48px; z-index: 2; max-width: 100%; }
+        .scrolly-chart-col { flex: 1 1 500px; position: sticky; top: 15vh; height: 70vh; z-index: 1; max-width: 100%; }
+        .scrolly-card { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
+        
+        @media (max-width: 900px) {
+          .scrolly-layout { display: flex; flex-direction: column; }
+          .scrolly-chart-col { order: -1; position: sticky; top: 5px; height: 45vh; z-index: 3; }
+          .scrolly-text-col { padding-right: 0; z-index: 2; margin-top: 0; padding-bottom: 20vh; }
+          .scrolly-card { 
+            background: var(--bg-2); 
+            padding: 24px 16px; 
+            border: 1px solid var(--border); 
+            border-radius: 4px; 
+            min-height: auto; 
+            margin-bottom: 40vh; 
+            box-shadow: 0 10px 40px rgba(10, 9, 6, 0.9); 
+          }
+        }
+      `}} />
+
       {/* SCOLLLYTELLING CONTAINER */}
-      <div className="col-wide" style={{ 
-        display: 'flex', 
-        flexWrap: 'wrap', 
-        position: 'relative',
-        marginTop: '48px'
-      }}>
+      <div className="col-wide scrolly-layout">
         
         {/* TEXT COLUMN (Scrolls) */}
-        <div style={{ flex: '1 1 300px', paddingRight: '48px', zIndex: 2 }}>
+        <div className="scrolly-text-col">
           
-          <div ref={el => stepsRef.current[0] = el} data-step="0" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div ref={el => stepsRef.current[0] = el} data-step="0" className="scrolly-card">
             <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: 'var(--cream-30)', marginBottom: '16px' }}>STEP 1 OF 4</span>
             <h3 className="h3-card" style={{ marginBottom: '16px' }}>The price freeze (2020–2021)</h3>
             <p className="body-copy">
@@ -548,7 +558,7 @@ const Chapter02 = () => {
             </p>
           </div>
 
-          <div ref={el => stepsRef.current[1] = el} data-step="1" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div ref={el => stepsRef.current[1] = el} data-step="1" className="scrolly-card">
             <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: 'var(--cream-30)', marginBottom: '16px' }}>STEP 2 OF 4</span>
             <h3 className="h3-card" style={{ marginBottom: '16px' }}>The rupee falls, the system breaks (2022)</h3>
             <p className="body-copy">
@@ -559,7 +569,7 @@ const Chapter02 = () => {
             </p>
           </div>
 
-          <div ref={el => stepsRef.current[2] = el} data-step="2" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div ref={el => stepsRef.current[2] = el} data-step="2" className="scrolly-card">
             <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: 'var(--cream-30)', marginBottom: '16px' }}>STEP 3 OF 4</span>
             <h3 className="h3-card" style={{ marginBottom: '16px' }}>The reset (2023–2025)</h3>
             <p className="body-copy">
@@ -570,7 +580,7 @@ const Chapter02 = () => {
             </p>
           </div>
 
-          <div ref={el => stepsRef.current[3] = el} data-step="3" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginBottom: '20vh' }}>
+          <div ref={el => stepsRef.current[3] = el} data-step="3" className="scrolly-card" style={{ marginBottom: '20vh' }}>
             <span style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: 'var(--cream-30)', marginBottom: '16px' }}>STEP 4 OF 4</span>
             <h3 className="h3-card" style={{ marginBottom: '16px' }}>A new shock (2026)</h3>
             <p className="body-copy">
@@ -584,14 +594,15 @@ const Chapter02 = () => {
         </div>
 
         {/* CHART COLUMN (Sticky) */}
-        <div style={{ flex: '1 1 500px', position: 'sticky', top: '15vh', height: '70vh', zIndex: 1 }} className="sticky-chart-container">
+        <div className="scrolly-chart-col sticky-chart-container">
           <div style={{ backgroundColor: 'var(--bg-2)', border: '1px solid var(--border)', borderRadius: '4px', padding: '24px', height: '100%', display: 'flex', flexDirection: 'column' }}>
             <h3 style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: 'var(--cream-30)', textTransform: 'uppercase', marginBottom: '24px' }}>
               PUMP PRICE VS REAL COST (LKR)
             </h3>
-            <div style={{ flexGrow: 1 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={getScrollyChartData()} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+            <div style={{ flexGrow: 1, position: 'relative' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={getScrollyChartData()} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
                   <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fill: 'var(--cream-30)', fontSize: 11, fontFamily: 'var(--ff-mono)' }} />
                   {/* Fixed Y-Axis domain ensures the chart doesn't jump vertically during steps */}
@@ -608,6 +619,7 @@ const Chapter02 = () => {
                   <Line type="monotone" dataKey="pump" stroke="var(--orange)" strokeWidth={2.5} dot={false} isAnimationActive={false} />
                 </LineChart>
               </ResponsiveContainer>
+              </div>
             </div>
           </div>
         </div>
@@ -627,34 +639,38 @@ const Chapter02 = () => {
         </p>
 
         {/* CHART 2: REGIONAL COMPARISON */}
-        <div style={{ width: '100%', height: '360px', marginBottom: '24px' }}>
+        <div style={{ width: '100%', height: '360px', marginBottom: '24px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '16px' }}>
             <h3 style={{ fontFamily: 'var(--ff-mono)', fontSize: '11px', color: 'var(--cream-30)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Sri Lanka vs the Region — Petrol Prices (Indexed to January 2020 = 100)
             </h3>
           </div>
           
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={CHART_2_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-              <XAxis dataKey="date" tickFormatter={(val) => val.split('-')[0]} axisLine={false} tickLine={false} tick={{ fill: 'var(--cream-30)', fontSize: 11, fontFamily: 'var(--ff-mono)' }} />
-              <YAxis domain={[50, 400]} axisLine={false} tickLine={false} tick={{ fill: 'var(--cream-30)', fontSize: 11, fontFamily: 'var(--ff-mono)' }} label={{ value: 'Price index', angle: -90, position: 'insideLeft', fill: 'var(--cream-30)', fontSize: 11, fontFamily: 'var(--ff-mono)' }} />
-              <Tooltip 
-                contentStyle={{ backgroundColor: 'var(--bg-3)', border: '1px solid var(--border)', borderRadius: '4px', fontFamily: 'var(--ff-mono)', fontSize: '12px' }}
-                itemStyle={{ color: 'var(--cream-60)', fontSize: '11px' }}
-              />
-              
-              <Line type="monotone" dataKey="india" name="India" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
-              <Line type="monotone" dataKey="pakistan" name="Pakistan" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
-              <Line type="monotone" dataKey="malaysia" name="Malaysia" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
-              <Line type="monotone" dataKey="thailand" name="Thailand" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
-              <Line type="monotone" dataKey="nepal" name="Nepal" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
-              <Line type="monotone" dataKey="philippines" name="Philippines*" stroke="var(--cream-10)" strokeWidth={1} dot={false} connectNulls />
-              
-              {/* Highlighted Sri Lanka Line */}
-              <Line type="monotone" dataKey="sriLanka" name="Sri Lanka" stroke="var(--orange)" strokeWidth={2.5} dot={{ r: 3, fill: 'var(--orange)', stroke: 'none' }} activeDot={{ r: 6 }} />
-            </LineChart>
-          </ResponsiveContainer>
+          <div style={{ flexGrow: 1, position: 'relative', width: '100%' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={CHART_2_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+                <XAxis dataKey="date" tickFormatter={(val) => val.split('-')[0]} axisLine={false} tickLine={false} tick={{ fill: 'var(--cream-30)', fontSize: 11, fontFamily: 'var(--ff-mono)' }} />
+                <YAxis domain={[50, 400]} axisLine={false} tickLine={false} tick={{ fill: 'var(--cream-30)', fontSize: 11, fontFamily: 'var(--ff-mono)' }} label={{ value: 'Price index', angle: -90, position: 'insideLeft', fill: 'var(--cream-30)', fontSize: 11, fontFamily: 'var(--ff-mono)' }} />
+                <Tooltip 
+                  contentStyle={{ backgroundColor: 'var(--bg-3)', border: '1px solid var(--border)', borderRadius: '4px', fontFamily: 'var(--ff-mono)', fontSize: '12px' }}
+                  itemStyle={{ color: 'var(--cream-60)', fontSize: '11px' }}
+                />
+                
+                <Line type="monotone" dataKey="india" name="India" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
+                <Line type="monotone" dataKey="pakistan" name="Pakistan" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
+                <Line type="monotone" dataKey="malaysia" name="Malaysia" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
+                <Line type="monotone" dataKey="thailand" name="Thailand" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
+                <Line type="monotone" dataKey="nepal" name="Nepal" stroke="var(--cream-10)" strokeWidth={1} dot={false} />
+                <Line type="monotone" dataKey="philippines" name="Philippines*" stroke="var(--cream-10)" strokeWidth={1} dot={false} connectNulls />
+                
+                {/* Highlighted Sri Lanka Line */}
+                <Line type="monotone" dataKey="sriLanka" name="Sri Lanka" stroke="var(--orange)" strokeWidth={2.5} dot={{ r: 3, fill: 'var(--orange)', stroke: 'none' }} activeDot={{ r: 6 }} />
+              </LineChart>
+            </ResponsiveContainer>
+            </div>
+          </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
             <p style={{ fontFamily: 'var(--ff-mono)', fontSize: '9px', color: 'var(--cream-30)' }}>
               * Philippines data unavailable for 2026
@@ -737,7 +753,7 @@ const Chapter03 = () => {
       {/* THREE CARDS GRID */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', 
         gap: '24px' 
       }}>
         
@@ -1051,7 +1067,6 @@ const Chapter04 = () => {
 
       {/* MASONRY GRID (CSS Multi-column approach) */}
       <div style={{
-        columnCount: 3,
         columnWidth: '300px',
         columnGap: '24px',
         marginBottom: '48px'
