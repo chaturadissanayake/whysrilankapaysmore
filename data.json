@@ -1,0 +1,13 @@
+{
+  "Download Data.xlsx - Petrol_Graph 2_En": [
+    { "date": "2020-01", "sriLanka_LKR": 137, "india_LKR": 142, "pakistan_LKR": 120, "malaysia_LKR": 85, "thailand_LKR": 130, "nepal_LKR": 125, "philippines_LKR": 115 },
+    { "date": "2021-01", "sriLanka_LKR": 137, "india_LKR": 163, "pakistan_LKR": 132, "malaysia_LKR": 89, "thailand_LKR": 140, "nepal_LKR": 140, "philippines_LKR": 124 },
+    { "date": "2022-01", "sriLanka_LKR": 177, "india_LKR": 184, "pakistan_LKR": 168, "malaysia_LKR": 93, "thailand_LKR": 162, "nepal_LKR": 162, "philippines_LKR": 138 },
+    { "date": "2022-06", "sriLanka_LKR": 470, "india_LKR": 198, "pakistan_LKR": 216, "malaysia_LKR": 93, "thailand_LKR": 182, "nepal_LKR": 187, "philippines_LKR": 166 },
+    { "date": "2023-01", "sriLanka_LKR": 400, "india_LKR": 191, "pakistan_LKR": 240, "malaysia_LKR": 93, "thailand_LKR": 175, "nepal_LKR": 175, "philippines_LKR": 158 },
+    { "date": "2024-01", "sriLanka_LKR": 330, "india_LKR": 184, "pakistan_LKR": 264, "malaysia_LKR": 93, "thailand_LKR": 169, "nepal_LKR": 168, "philippines_LKR": 155 },
+    { "date": "2025-01", "sriLanka_LKR": 300, "india_LKR": 177, "pakistan_LKR": 252, "malaysia_LKR": 93, "thailand_LKR": 166, "nepal_LKR": 162, "philippines_LKR": 149 },
+    { "date": "2026-01", "sriLanka_LKR": 330, "india_LKR": 177, "pakistan_LKR": 276, "malaysia_LKR": 93, "thailand_LKR": 175, "nepal_LKR": 175, "philippines_LKR": null },
+    { "date": "2026-05", "sriLanka_LKR": 392, "india_LKR": 184, "pakistan_LKR": 294, "malaysia_LKR": 95, "thailand_LKR": 188, "nepal_LKR": 181, "philippines_LKR": null }
+  ]
+}

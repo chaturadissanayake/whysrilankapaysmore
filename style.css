@@ -1,0 +1,162 @@
+/* =========================================
+   DESIGN SYSTEM VARIABLES
+   ========================================= */
+:root {
+  /* Backgrounds */
+  --bg:        #0A0906;
+  --bg-2:      #0F0D0A;
+  --bg-3:      #141210;
+  --bg-4:      #1C1915;
+  --bg-5:      #221F1A;
+
+  /* Typography Colors */
+  --cream:     #EDE8DF;
+  --cream-60:  rgba(237,232,223,0.82);
+  --cream-30:  rgba(237,232,223,0.75);
+  --cream-10:  rgba(237,232,223,0.12);
+
+  /* Accents */
+  --orange:    #C4522A; /* PRIMARY ACCENT — use sparingly */
+  --gold:      #B8922A; /* Secondary — benchmarks, callouts */
+  --blue:      #3D8FD4; /* Chart line 2 — formula/reference */
+  --green:     #2AA35E; /* Positive values, price decreases */
+  --red:       #C43030; /* Critical alerts only */
+
+  /* Structural */
+  --border:    rgba(237,232,223,0.14);
+
+  /* Font Families */
+  --ff-disp:   'Cormorant Garamond', Georgia, serif;
+  --ff-mono:   'IBM Plex Mono', monospace;
+  --ff-body:   'Lora', Georgia, serif;
+  --ff-ui:     'Inter', sans-serif;
+
+  /* Animation & Layout */
+  --ease-out:  cubic-bezier(0.16,1,0.3,1);
+  --col-read:  min(620px, calc(100vw - 48px));
+  --col-wide:  min(960px, calc(100vw - 48px));
+}
+
+/* =========================================
+   BASE RESETS
+   ========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--cream);
+  font-family: var(--ff-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--orange);
+  color: var(--cream);
+  padding: 12px 24px;
+  z-index: 9999;
+  font-family: var(--ff-ui);
+  text-decoration: none;
+  font-weight: 500;
+  transition: top 0.2s var(--ease-out);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+button, a {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* =========================================
+   LAYOUT UTILITIES
+   ========================================= */
+.col-read {
+  width: var(--col-read);
+  margin: 0 auto;
+}
+
+.col-wide {
+  width: var(--col-wide);
+  margin: 0 auto;
+}
+
+.section-padding {
+  padding: 120px 0 80px;
+}
+
+/* =========================================
+   TYPOGRAPHY SCALE
+   ========================================= */
+.hero-headline {
+  font-family: var(--ff-disp);
+  font-weight: 300;
+  font-size: clamp(3.2rem, 8.5vw, 7.5rem);
+  line-height: 1;
+  color: var(--cream);
+}
+
+.h2-section {
+  font-family: var(--ff-disp);
+  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+
+.h3-card {
+  font-family: var(--ff-disp);
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--cream);
+}
+
+.section-label {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream-30);
+  margin-bottom: 24px;
+  display: block;
+}
+
+.body-copy {
+  font-family: var(--ff-body);
+  font-size: 18px;
+  line-height: 1.82;
+  color: var(--cream-60);
+  margin-bottom: 24px;
+  max-width: 100%;
+}
+
+.data-label {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  color: var(--cream-30);
+}
+
+.ui-text {
+  font-family: var(--ff-ui);
+  font-weight: 500;
+}
