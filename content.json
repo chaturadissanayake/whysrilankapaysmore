@@ -1,0 +1,263 @@
+{
+  "hero": {
+    "title": "Why Sri Lanka Pays More",
+    "subtitle": "Six years of numbers. A system built to fail. A global crisis that hit us five times harder than the countries next to us.",
+    "meta": "By Chatura Dissanayake - Published May 31, 2026 - 8 min read"
+  },
+  "lede": {
+    "marker": "THE STORY",
+    "blocks": [
+      { "type": "paragraph", "text": "In January 2020, a litre of petrol cost Rs. 137. Today it costs Rs. 407." },
+      { "type": "paragraph", "text": "That is not just a number going up. It is a three-wheeler driver recalculating every morning whether the day is worth starting. It is your grocery bill climbing even when you did not change what you buy." },
+      { "type": "paragraph", "text": "When fuel prices go up, the government says \"global oil prices.\" The opposition says \"mismanagement.\" Social media says both, and neither. All three are partially right. This story shows you the actual math." },
+      { "type": "paragraph", "text": "Six years of data shows that global events matter - but Sri Lanka consistently pays more than the countries around it for the same barrel of oil. This is not because we are unlucky. It is because of how our own system is built." },
+      { "type": "paragraph", "text": "Here is how it works. Where the money goes. And what it would take to change it." }
+    ]
+  },
+  "chapter01": {
+    "marker": "CHAPTER 01",
+    "title": "The number that started a fight.",
+    "content_top": [
+      { "type": "paragraph", "text": "On May 14, 2026, speaking at the Nuwara Eliya District Coordinating Committee meeting, President Dissanayake disclosed that the actual cost to import one litre of diesel had reached Rs. 720. At the time, diesel was being sold at Rs. 392. The government was absorbing Rs. 100 per litre, and the Ceylon Petroleum Corporation was still losing money on every litre it sold." },
+      { "type": "paragraph", "text": "On May 31, the price was revised upward to Rs. 407 - a partial correction, but still well below the real cost. As of that revision, the gap between cost and pump price narrows but does not close. The CPC continues to absorb heavy losses on every litre sold." }
+    ],
+    "content_mid": [
+      { "type": "paragraph", "text": "That is a genuine loss. The Rs. 720 figure is not an exaggeration - it reflects the real cost of buying oil at USD 100+ per barrel, converting at Rs. 325 to the dollar, shipping it here, and adding taxes and handling. The conflict in the Middle East caused the oil price spike. Sri Lanka's own structural problems explain why the rupee conversion makes it so much worse. When you buy fuel today, you are paying for oil that genuinely costs that much to bring here." },
+      { "type": "paragraph", "text": "But the question this story is asking is different. Why does it cost more to bring oil here than to the countries next to us? And why, when the world crisis eventually calms down, do our prices not come back down the way other countries' prices do?" }
+    ],
+    "stats": [
+      { "value": "Rs. 720", "label": "Cost to bring 1L of diesel to SL today", "alert": false },
+      { "value": "Rs. 407", "label": "What you pay at the pump", "alert": false },
+      { "value": "Rs. 213", "label": "CPC loss per litre after govt subsidy", "alert": true }
+    ],
+    "bill_cascade": [
+      { "m": "Feb 2026", "v": "USD 98M", "highlight": false },
+      { "m": "Mar", "v": "USD 216M", "highlight": false },
+      { "m": "Apr", "v": "USD 368M", "highlight": false },
+      { "m": "May", "v": "USD 522M", "highlight": true }
+    ],
+    "content_bottom": [
+      { "type": "paragraph", "text": "That is more than five times February's bill in three months - the President called it six times, comparing against the projected May figure of USD 522 million. For a country still recovering from a debt crisis, this kind of shock is not simple to absorb." },
+      { "type": "paragraph", "text": "So the question is not whether the crisis is real. It is. The question is whether Sri Lanka was built to handle it. The answer, based on six years of data, is no." }
+    ]
+  },
+  "chapter02": {
+    "marker": "CHAPTER 02",
+    "title": "The Full Picture.",
+    "steps": [
+      { "title": "The hidden debt (2020 - 2021)", "text": "In 2020, global oil prices crashed due to COVID-19. Sri Lanka's government froze the pump price at Rs. 137, and kept it there even as global prices recovered. The difference was covered by borrowing money inside the Ceylon Petroleum Corporation. The debt accumulated silently. No announcement. No public debate." },
+      { "title": "The bill arrives (2022)", "text": "By early 2022, Sri Lanka had run out of foreign currency. The rupee lost more than 40% of its value in three months. The real cost of a litre in rupees exploded - and the hidden debt could no longer be hidden. Petrol stations ran dry. Queues stretched for kilometres. People waited days for a tank of fuel." },
+      { "title": "The reset (2023 - 2025)", "text": "A market-linked pricing formula was introduced - tying pump prices to real global costs and the exchange rate. Prices were high but they reflected reality. By 2025, the economy was stabilising. For a brief period, the system worked." },
+      { "title": "A new shock (2026)", "text": "On February 28, 2026, the United States and Israel launched strikes on Iran. Iran responded by closing the Strait of Hormuz - the narrow waterway through which around 20 percent of the world's oil supply passes. Brent crude jumped from USD 65 to over USD 117 per barrel in five weeks. Sri Lanka, which imports all its oil and holds only 30 days of reserves, had no buffer. The import bill multiplied more than five times in three months. The weak rupee and empty reserves meant every dollar of global price increase landed on Sri Lanka harder than any country around it." }
+    ],
+    "content_mid": [
+      { "type": "paragraph", "text": "Six years. Two completely different kinds of crisis. The same result: Sri Lanka's people pay more than they should." },
+      { "type": "paragraph", "text": "In 2020, the government made prices look cheap by hiding the cost inside debt. In 2026, the cost is genuinely high because of global events." }
+    ],
+    "transition_title_1": "But did everyone suffer equally?",
+    "content_bottom": [
+      { "type": "paragraph", "text": "Global prices dictate the baseline, but local policy decides the final blow. When we compare Sri Lanka's pump prices to our immediate neighbors - who all buy from the exact same global market - the structural failure becomes obvious." }
+    ]
+  },
+  "chapter03": {
+    "marker": "CHAPTER 03",
+    "title": "Five reasons we always take the biggest hit.",
+    "subtitle": "And none of them are global wars.",
+    "content_top": [
+      { "type": "paragraph", "text": "The Middle East conflict hit every country in the region. Most absorbed it. Sri Lanka's import bill went up five times in three months. This is why." }
+    ],
+    "traps": [
+      {
+        "id": "trap1", "title": "A Weaker Rupee", "chart_type": "rate",
+        "text": "In 2020, one US dollar cost about Rs. 185. Today it costs around Rs. 325. Since Sri Lanka buys all its oil in US dollars, this single fact makes fuel more expensive for us even when the world oil price stays exactly the same. When the world price goes up too - as it has sharply in 2026 - the two effects multiply each other.",
+        "impact": "The weaker rupee alone adds more than Rs. 100 to a litre compared to 2020 - before the oil price spike is even counted.",
+        "source": "SOURCE: CENTRAL BANK OF SRI LANKA"
+      },
+      {
+        "id": "trap2", "title": "An Empty Tank", "chart_type": "reserves",
+        "text": "Sri Lanka holds around 30 days of fuel in storage. The global minimum standard set by the IEA is 90 days. India meets it. Malaysia holds over 70. When a supply shock hits a country with 90 days of reserves, they can wait. They buy slowly, at planned prices. When it hits a country with 30 days, the government has to move immediately - buying whatever is available, at whatever price is being charged that week.",
+        "impact": "Every global disruption forces Sri Lanka to buy emergency fuel at peak prices. That cost reaches your pump price the very next month.",
+        "source": "SOURCE: IEA / GLOBAL ENERGY MONITOR"
+      },
+      {
+        "id": "trap3", "title": "Subsidies Help the Rich", "chart_type": "subsidy",
+        "text": "When the government lowers fuel prices to \"protect the public,\" it sounds fair. But fuel consumption is not spread evenly. The wealthiest 30% of households consume around 70% of all fuel. They own more vehicles. They drive further. A blanket fuel price cut sends most of the money to households that need it least.",
+        "impact": "The government loses billions a month giving cheap fuel to people who can afford the real price - money that could go to targeted support.",
+        "source": "SOURCE: ADVOCATA INSTITUTE / WORLD BANK"
+      },
+      {
+        "id": "trap4", "title": "The Silent Debt", "chart_type": "debt",
+        "text": "When the government froze pump prices between 2020 and 2022, the cost didn't disappear. It was loaded onto the Ceylon Petroleum Corporation's balance sheet. CPC's debt to state banks skyrocketed to 1.7 Trillion LKR, effectively risking the entire banking sector. We didn't pay at the pump, but we paid in inflation and economic collapse.",
+        "impact": "Hidden fuel subsidies created an unsustainable debt bomb that we are still aggressively paying off today in taxes.",
+        "source": "SOURCE: MINISTRY OF FINANCE"
+      },
+      {
+        "id": "trap5", "title": "Wages Left Behind", "chart_type": "afford",
+        "text": "Rs. 137 vs Rs. 407 is only half the story. The real metric is affordability. In 2020, an average daily wage earner could buy 5.5 litres of petrol with a day's work. Today, even with nominal wage increases, they can barely buy 3.5 litres. The price has decoupled from people's earning power.",
+        "impact": "The true cost of fuel is measured in the standard of living, which has steadily collapsed.",
+        "source": "SOURCE: DEPT OF CENSUS & STATISTICS"
+      }
+    ]
+  },
+  "contextBridge": {
+    "marker": "CHAPTER 03b - THE DOMINO EFFECT",
+    "title": "This is not a story about cars.",
+    "subtitle": "It is a story about everything you buy.",
+    "content_top": [
+      { "type": "paragraph", "text": "Most people in Sri Lanka do not own a car. But everyone eats. And the moment diesel goes up, the cost of getting food from the farm to your plate goes up too. Here is how it travels:" }
+    ],
+    "cascadeStages": [
+      { "label": "Fuel prices rise", "time": "Day 1" },
+      { "label": "Transport adjusts", "time": "Day 3" },
+      { "label": "Food costs up", "time": "Week 2" },
+      { "label": "Market prices rise", "time": "Week 4" },
+      { "label": "Goods follow", "time": "Month 2" },
+      { "label": "Utilities adjust", "time": "Month 3" }
+    ],
+    "box_title": "Why Panic Buying Makes It Worse",
+    "box_text": "When a price hike rumour spreads, everyone fills up immediately. The tanks, already at only 30 days, go empty in days. The government orders emergency fuel on short notice, at peak spot prices. That extra cost appears in next month's revision. The panic you were trying to outrun contributed to causing the next one.",
+    "content_bottom": [
+      { "type": "paragraph", "text": "The problem underneath all of this is transparency. Because the pricing formula is not published in plain language, nobody knows whether a hike is driven by global oil prices, government debt, tax adjustments, or something else entirely." },
+      { "type": "paragraph", "text": "Without that information, every revision becomes a rumour before it becomes a fact." }
+    ]
+  },
+  "chapter04": {
+    "marker": "CHAPTER 04",
+    "title": "What people are actually saying.",
+    "content_top": [
+      { "type": "paragraph", "text": "When the government releases a price revision without explaining the math, the public fills the gap. Some people get it right. Some get it wrong. Everyone is angry for a reason." }
+    ],
+    "voices": [
+      { "platform": "Reddit · r/srilanka", "upvotes": 79, "highlight": true, "text": "Are you that disconnected from reality? Do you really think most people have enough money to just buy an EV? I can safely bet 99% of Sri Lankans cannot do that." },
+      { "platform": "News Interview · Transport Union", "upvotes": null, "highlight": true, "text": "They publish global prices but never show how much they tax us. We are not just paying for oil, we are paying the sins of the CPC and the government's borrowing." },
+      { "platform": "Reddit · r/srilanka", "upvotes": 27, "highlight": false, "text": "If global fuel prices are increasing, and we buy our fuel from the same global market, why would prices at the pump not increase? Sometimes shit just sucks and it's out of anyone's control." },
+      { "platform": "Instagram · [Anonymised]", "upvotes": null, "highlight": false, "text": "The unfortunate situation is this affects different people differently. If you own assets you are a beneficiary. If you are a retiree with LKR savings, your quality of life will consistently collapse." },
+      { "platform": "Reddit · r/srilanka", "upvotes": 17, "highlight": false, "text": "Waiting to see the day we invite the old corrupt thugs back... the way these guys are running the show." },
+      { "platform": "Reddit · r/srilanka", "upvotes": 12, "highlight": false, "text": "Yeah, local fuel price should reflect global price. But to say 'to curb consumption', that's a bad intent." },
+      { "platform": "Reddit · r/srilanka", "upvotes": 7, "highlight": false, "text": "Unfortunately paying back loans, mostly taken by previous governments, eats up like 50% of tax revenue. If we built renewable energy infrastructure instead of highways we wouldn't be in this mess." }
+    ],
+    "content_bottom": [
+      { "type": "paragraph", "text": "The frustration in these conversations is real - and it is pointed in every direction at once, because the information gap leaves people filling in the blanks themselves." },
+      { "type": "paragraph", "text": "That is what this story is trying to fix." }
+    ]
+  },
+  "chapter05": {
+    "marker": "CHAPTER 05",
+    "title": "Four things that would actually fix this.",
+    "content_top": [
+      { "type": "paragraph", "text": "None of these problems were discovered by this story. Sri Lanka's policy research community has been documenting them for years. What has been harder to find is a version that shows the whole system - the debt, the reserves, the exchange rate, and who bears the cost - in one place, without a policy background as a prerequisite. That is the gap this story is trying to close." }
+    ],
+    "solutions": [
+      { "num": "01", "title": "Publish the real math. Every month. In plain language.", "text": "Before every price revision, release a simple breakdown: how much is the actual cost of the oil, how much is tax, how much is CPC operating cost, how much is debt repayment or subsidy recovery. The public has a right to see the math before they are asked to pay it.", "ask": "Ask: Ministry of Petroleum and PUCSL should publish a plain-language cost breakdown with every fuel price revision." },
+      { "num": "02", "title": "Stop the monthly price shocks.", "text": "Sri Lanka adjusts prices once a month, creating sudden large changes that trigger panic buying. India adjusts daily - the change is so small nobody panics. Moving to weekly or fortnightly revisions would reduce the shock cycle and break the panic loop.", "ask": null },
+      { "num": "03", "title": "Fill the reserve tanks.", "text": "Sri Lanka holds roughly 30 days of fuel in reserve. The IEA minimum is 90 days. A country with 90 days can wait out a global price spike. Sri Lanka cannot. Closing that gap is the single most direct way to reduce vulnerability to the next crisis.", "ask": null },
+      { "num": "04", "title": "Target the subsidy at the people who need it.", "text": "Right now, fuel subsidies go to everyone equally - which means 70% of the money goes to the wealthiest 30% of households, who consume the most fuel. A targeted cash transfer to low-income households would cost less, help more people, and stop the CPC bleeding money on subsidies for people who do not need them.", "ask": "Ask: Replace the blanket fuel subsidy with a direct cash support programme for households below the poverty line." }
+    ],
+    "content_bottom": [
+      { "type": "paragraph", "text": "Global oil shocks are not going away. The Middle East crisis of 2026 will not be the last disruption Sri Lanka faces." },
+      { "type": "paragraph", "text": "The question is whether, when the next one comes, this country will have the reserves, the pricing transparency, and the exchange rate stability to absorb it - or whether it will once again multiply the impact on the people least able to bear it." },
+      { "type": "paragraph", "text": "Right now, a Sri Lankan paying Rs. 407 for diesel is paying more than a Malaysian, a Pakistani, a Thai, and a Filipino are paying in their own currencies for the same litre." },
+      { "type": "paragraph", "text": "It is the result of decisions made over two decades - by governments of every colour - to keep prices artificially low instead of building the reserves, the exchange rate stability, and the pricing transparency that would have protected everyone when the next crisis arrived. The next crisis is always coming." }
+    ]
+  },
+  "datasets": {
+    "CHART_1_DATA": [
+      { "date": "2020-01", "year": "2020", "pump": 119, "formula": 137 },
+      { "date": "2020-03", "year": "", "pump": 119, "formula": null },
+      { "date": "2021-01", "year": "2021", "pump": 119, "formula": 180 },
+      { "date": "2021-08", "year": "", "pump": 119, "formula": 210 },
+      { "date": "2022-01", "year": "2022", "pump": 148, "formula": 300 },
+      { "date": "2022-03", "year": "", "pump": 198, "formula": null },
+      { "date": "2022-06", "year": "", "pump": 460, "formula": 500 },
+      { "date": "2022-08", "year": "", "pump": 400, "formula": null },
+      { "date": "2022-10", "year": "", "pump": 390, "formula": null },
+      { "date": "2023-01", "year": "2023", "pump": 370, "formula": 380 },
+      { "date": "2023-09", "year": "", "pump": 341, "formula": null },
+      { "date": "2023-11", "year": "", "pump": 356, "formula": null },
+      { "date": "2023-12", "year": "", "pump": 329, "formula": null },
+      { "date": "2024-01", "year": "2024", "pump": 358, "formula": 300 },
+      { "date": "2024-06", "year": "", "pump": 317, "formula": null },
+      { "date": "2024-09", "year": "", "pump": 307, "formula": null },
+      { "date": "2024-12", "year": "", "pump": 286, "formula": null },
+      { "date": "2025-01", "year": "2025", "pump": 286, "formula": 280 },
+      { "date": "2025-04", "year": "", "pump": 286, "formula": null },
+      { "date": "2025-09", "year": "", "pump": 283, "formula": null },
+      { "date": "2025-11", "year": "", "pump": 277, "formula": null },
+      { "date": "2026-01", "year": "2026", "pump": 279, "formula": 400 },
+      { "date": "2026-02", "year": "", "pump": 277, "formula": null },
+      { "date": "2026-03", "year": "", "pump": 382, "formula": 600 },
+      { "date": "2026-04", "year": "", "pump": 382, "formula": null },
+      { "date": "2026-05", "year": "", "pump": 407, "formula": 720 }
+    ],
+    "CHART_2_DATA": [
+      { "date": "2020-01", "sriLanka": 100, "india": 100, "pakistan": 100, "malaysia": 100, "thailand": 100, "nepal": 100, "philippines": 100 },
+      { "date": "2021-01", "sriLanka": 100, "india": 114, "pakistan": 118, "malaysia": 100, "thailand": 108, "nepal": 112, "philippines": 110 },
+      { "date": "2022-01", "sriLanka": 129, "india": 129, "pakistan": 150, "malaysia": 100, "thailand": 122, "nepal": 130, "philippines": 122 },
+      { "date": "2022-06", "sriLanka": 343, "india": 138, "pakistan": 193, "malaysia": 100, "thailand": 137, "nepal": 149, "philippines": 147 },
+      { "date": "2023-01", "sriLanka": 292, "india": 133, "pakistan": 214, "malaysia": 100, "thailand": 132, "nepal": 139, "philippines": 140 },
+      { "date": "2024-01", "sriLanka": 241, "india": 128, "pakistan": 236, "malaysia": 100, "thailand": 127, "nepal": 134, "philippines": 137 },
+      { "date": "2025-01", "sriLanka": 215, "india": 124, "pakistan": 225, "malaysia": 100, "thailand": 125, "nepal": 128, "philippines": 132 },
+      { "date": "2026-01", "sriLanka": 215, "india": 124, "pakistan": 246, "malaysia": 102, "thailand": 132, "nepal": 132, "philippines": null },
+      { "date": "2026-06", "sriLanka": 317, "india": 129, "pakistan": 263, "malaysia": 108, "thailand": 141, "nepal": 136, "philippines": null }
+    ],
+    "CHART_3_DATA": [
+      { "date": "2020-01", "year": "2020", "rate": 182.0 },
+      { "date": "2020-12", "year": "", "rate": 185.0 },
+      { "date": "2021-06", "year": "2021", "rate": 200.0 },
+      { "date": "2021-12", "year": "", "rate": 200.0 },
+      { "date": "2022-03", "year": "2022", "rate": 290.0 },
+      { "date": "2022-05", "year": "", "rate": 360.0 },
+      { "date": "2022-12", "year": "", "rate": 365.0 },
+      { "date": "2023-06", "year": "2023", "rate": 320.0 },
+      { "date": "2023-12", "year": "", "rate": 324.0 },
+      { "date": "2024-06", "year": "2024", "rate": 300.0 },
+      { "date": "2024-12", "year": "", "rate": 293.0 },
+      { "date": "2025-06", "year": "2025", "rate": 299.0 },
+      { "date": "2025-12", "year": "", "rate": 307.0 },
+      { "date": "2026-01", "year": "2026", "rate": 310.0 },
+      { "date": "2026-03", "year": "", "rate": 315.0 },
+      { "date": "2026-05", "year": "", "rate": 345.4 },
+      { "date": "2026-06", "year": "", "rate": 332.0 }
+    ],
+    "CHART_4_DATA": [
+      { "country": "Sri Lanka", "days": 30, "highlight": true },
+      { "country": "Philippines", "days": 30, "highlight": false },
+      { "country": "Thailand", "days": 65, "highlight": false },
+      { "country": "Malaysia", "days": 72, "highlight": false },
+      { "country": "India", "days": 74, "highlight": false }
+    ],
+    "CHART_5_DATA": [
+      { "name": "Top 30%", "value": 70, "highlight": true },
+      { "name": "Bottom 70%", "value": 30, "highlight": false }
+    ],
+    "CHART_CPC_DEBT": [
+      { "year": "2019", "debt": 550 },
+      { "year": "2020", "debt": 750 },
+      { "year": "2021", "debt": 1100 },
+      { "year": "2022", "debt": 1700 },
+      { "year": "2023", "debt": 900 },
+      { "year": "2024", "debt": 200 },
+      { "year": "2026", "debt": 84 }
+    ],
+    "CHART_AFFORDABILITY": [
+      { "year": "2020", "fuelPerDay": 3.6 },
+      { "year": "2022", "fuelPerDay": 1.2 },
+      { "year": "2024", "fuelPerDay": 2.0 },
+      { "year": "2025", "fuelPerDay": 3.5 },
+      { "year": "2026", "fuelPerDay": 2.8 }
+    ],
+    "BRENT_VS_PUMP_DATA": [
+      { "date": "2020-01", "brent": 64, "pump": 137 },
+      { "date": "2021-01", "brent": 55, "pump": 137 },
+      { "date": "2022-01", "brent": 87, "pump": 177 },
+      { "date": "2022-06", "brent": 122, "pump": 470 },
+      { "date": "2023-01", "brent": 83, "pump": 400 },
+      { "date": "2024-01", "brent": 80, "pump": 330 },
+      { "date": "2025-01", "brent": 65, "pump": 300 },
+      { "date": "2026-01", "brent": 65, "pump": 330 },
+      { "date": "2026-03", "brent": 103, "pump": 360 },
+      { "date": "2026-04", "brent": 117, "pump": 392 },
+      { "date": "2026-06", "brent": 93, "pump": 407 }
+    ]
+  }
+}

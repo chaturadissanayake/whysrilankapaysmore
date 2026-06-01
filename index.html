@@ -2,16 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Why Sri Lanka Pays More</title>
+    <meta name="description" content="A data investigation into why Sri Lanka's fuel prices consistently outpace the countries around it - and the structural problems that make every global oil shock hit us harder.">
+    <meta property="og:title" content="Why Sri Lanka Pays More">
+    <meta property="og:description" content="Six years of data. A system built to fail. A global crisis that hit us five times harder than the countries next to us.">
+    <meta property="og:type" content="article">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Why Sri Lanka Pays More">
+    <meta name="twitter:description" content="Six years of data. A system built to fail. A global crisis that hit us five times harder than the countries next to us.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 
-    <script>window.process = { env: { NODE_ENV: 'development' } };</script>
+    <script>window.process = { env: { NODE_ENV: 'production' } };</script>
 
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -22,9 +29,7 @@
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    
     <div id="root"></div>
-
     <script type="text/babel" data-presets="react" src="app.jsx"></script>
 </body>
 </html>
