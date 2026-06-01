@@ -4,36 +4,16 @@ const {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
 } = Recharts;
 
-// ==========================================
-// DATA STORE GLOBALS
-// ==========================================
 const CHART_1_DATA = [
-  { date: "2020-01", pump: 119, formula: 137 },
-  { date: "2020-03", pump: 119, formula: null },
-  { date: "2021-01", pump: 119, formula: 180 },
-  { date: "2021-08", pump: 119, formula: 210 },
-  { date: "2022-01", pump: 148, formula: 300 },
-  { date: "2022-03", pump: 198, formula: null },
-  { date: "2022-06", pump: 460, formula: 500 },
-  { date: "2022-08", pump: 400, formula: null },
-  { date: "2022-10", pump: 390, formula: null },
-  { date: "2023-01", pump: 370, formula: 380 },
-  { date: "2023-09", pump: 341, formula: null },
-  { date: "2023-11", pump: 356, formula: null },
-  { date: "2023-12", pump: 329, formula: null },
-  { date: "2024-01", pump: 358, formula: 300 },
-  { date: "2024-06", pump: 317, formula: null },
-  { date: "2024-09", pump: 307, formula: null },
-  { date: "2024-12", pump: 286, formula: null },
-  { date: "2025-01", pump: 286, formula: 280 },
-  { date: "2025-04", pump: 286, formula: null },
-  { date: "2025-09", pump: 283, formula: null },
-  { date: "2025-11", pump: 277, formula: null },
-  { date: "2026-01", pump: 279, formula: 400 },
-  { date: "2026-02", pump: 277, formula: null },
-  { date: "2026-03", pump: 382, formula: 600 },
-  { date: "2026-04", pump: 382, formula: null },
-  { date: "2026-05", pump: 407, formula: 720 }
+  { date: "2020-01", year: "2020", pump: 137, formula: 136 },
+  { date: "2021-01", year: "2021", pump: 137, formula: 135 },
+  { date: "2022-01", year: "2022", pump: 177, formula: 164 },
+  { date: "2022-06", year: "",     pump: 470, formula: 416 },
+  { date: "2023-01", year: "2023", pump: 370, formula: 296 },
+  { date: "2024-01", year: "2024", pump: 366, formula: 340 },
+  { date: "2025-01", year: "2025", pump: 309, formula: 298 },
+  { date: "2026-01", year: "2026", pump: 294, formula: 294 },
+  { date: "2026-05", year: "",     pump: 410, formula: 409 }
 ];
 
 const CHART_2_DATA = [
@@ -131,7 +111,7 @@ const CHANGES = [
 ];
 
 const CHAPTERS = [
-  { id: "viral",   label: "The Viral Number" },
+  { id: "viral",   label: "The Formula" },
   { id: "heroViz", label: "Six Years of Data" },
   { id: "trap",    label: "The Structural Trap" },
   { id: "context", label: "The Domino Effect" },
@@ -139,11 +119,6 @@ const CHAPTERS = [
   { id: "change",  label: "What Needs to Change" },
 ];
 
-// ==========================================
-// UTILITY COMPONENTS
-// ==========================================
-
-// Reusable chart legend - shows line swatches or bar swatches
 const ChartLegend = ({ items, style }) => (
   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', paddingTop: '10px', ...style }}>
     {items.map((item, i) => (
@@ -177,7 +152,6 @@ const ChartLegend = ({ items, style }) => (
   </div>
 );
 
-// Year-only tick formatter - only shows label on January entries (date ends in -01)
 const yearTickFormatter = (val) => {
   if (val && val.endsWith('-01')) return val.split('-')[0];
   return '';
@@ -240,6 +214,22 @@ const TopProgress = () => {
   );
 };
 
+const GraphicBlock = ({ title, description, source, sourceId, downloadPath, children }) => (
+  <div className="graphic-block">
+    <div className="graphic-block-header">
+      <div className="graphic-block-title">{title}</div>
+      {description && <div className="graphic-block-desc">{description}</div>}
+    </div>
+    {children}
+    <div className="graphic-block-footer">
+      <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>
+        SOURCE: <a href={`#cite-${sourceId}`} style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>{source}</a>
+      </span>
+      <a href={downloadPath || "data_2.json"} download className="label-mono" style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textDecoration: 'none', fontWeight: 600 }}>⬇ GET RAW DATA</a>
+    </div>
+  </div>
+);
+
 const MinimalTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -256,9 +246,6 @@ const MinimalTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-// ==========================================
-// SECTIONS
-// ==========================================
 const Hero = () => (
   <section className="section-pad container" style={{ minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
     <span className="label-mono" style={{ color: 'var(--accent-red)', marginBottom: 'var(--space-md)' }}></span>
@@ -278,7 +265,7 @@ const Lede = () => (
   <section className="container section-pad">
     <div className="content-container">
       <span className="label-mono" style={{ marginBottom: 'var(--space-lg)' }}>THE STORY</span>
-      <p className="body-text">In January 2020, a litre of petrol cost Rs. 137. Today it costs Rs. 407.</p>
+      <p className="body-text">In January 2020, a litre of 92 Octane petrol cost Rs. 137. Today it costs Rs. 410 at the pump.</p>
       <p className="body-text">That is not just a number going up. It is a three-wheeler driver recalculating every morning whether the day is worth starting. It is your grocery bill climbing even when you did not change what you buy.</p>
       <p className="body-text">When fuel prices go up, the government says "global oil prices." The opposition says "mismanagement." Social media says both, and neither. All three are partially right. This story shows you the actual math.</p>
       <p className="body-text">Six years of data shows that global events matter - but Sri Lanka consistently pays more than the countries around it for the same barrel of oil. This is not because we are unlucky. It is because of how our own system is built.</p>
@@ -287,58 +274,51 @@ const Lede = () => (
   </section>
 );
 
-// ---- BREAKDOWN VISUAL (Chapter 01 sub-component) ----
-// Fix: replaced near-indistinguishable greys with semantically distinct colours.
-// Bar 1 = what it costs to import. Bar 2 = how that cost is shared.
 const BREAKDOWN_COST_COLORS = {
-  cif:  '#1A3A5C',  // deep navy - the dominant global oil cost
-  tax:  '#B7791F',  // amber   - government levy
-  dist: '#718096',  // slate   - distribution / handling
+  cif:  '#1A3A5C',
+  tax:  '#B7791F',
+  dist: '#718096',
 };
 const BREAKDOWN_PAY_COLORS = {
-  you:  '#1A1A1A',              // near-black - consumer payment
-  govt: '#D4AF37',              // gold      - government subsidy
-  loss: '#D2222D',              // red       - CPC unrecovered loss
+  you:  '#1A1A1A',
+  govt: '#D4AF37'
 };
 
 const BreakdownVisual = () => (
   <div style={{ margin: 'var(--space-xl) 0', padding: 'var(--space-lg)', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '4px' }}>
-    <h3 style={{ marginBottom: 'var(--space-lg)' }}>The Real Math (Current Breakdown)</h3>
+    <h3 style={{ marginBottom: 'var(--space-lg)' }}>The Real Math: 92 Octane Petrol</h3>
 
-    {/* ---------- BAR 1: cost components ---------- */}
-    <span className="label-mono" style={{ color: 'var(--text-tertiary)', marginBottom: 'var(--space-sm)', display: 'block' }}>WHAT IT COSTS TO DELIVER ONE LITRE - RS. 720</span>
+    <span className="label-mono" style={{ color: 'var(--text-tertiary)', marginBottom: 'var(--space-sm)', display: 'block' }}>WHAT IT ACTUALLY COSTS TO DELIVER ONE LITRE - RS. 409</span>
     <ChartLegend style={{ marginBottom: '10px' }} items={[
-      { label: 'CIF cost  Rs. 580', color: BREAKDOWN_COST_COLORS.cif,  type: 'bar' },
-      { label: 'Taxes  Rs. 110',    color: BREAKDOWN_COST_COLORS.tax,  type: 'bar' },
-      { label: 'Distribution  Rs. 30', color: BREAKDOWN_COST_COLORS.dist, type: 'bar' },
+      { label: 'Landed Cost (V1)  Rs. 269', color: BREAKDOWN_COST_COLORS.cif,  type: 'bar' },
+      { label: 'Taxes (V4)  Rs. 122',    color: BREAKDOWN_COST_COLORS.tax,  type: 'bar' },
+      { label: 'Processing & Admin (V2+V3) Rs. 18', color: BREAKDOWN_COST_COLORS.dist, type: 'bar' },
     ]} />
     <div className="breakdown-bar">
-      <div className="breakdown-segment" style={{ flex: 580, background: BREAKDOWN_COST_COLORS.cif,  color: '#FFF' }}><span>CIF</span></div>
-      <div className="breakdown-segment" style={{ flex: 110, background: BREAKDOWN_COST_COLORS.tax,  color: '#FFF' }}><span>TAX</span></div>
-      <div className="breakdown-segment" style={{ flex: 30,  background: BREAKDOWN_COST_COLORS.dist, color: '#FFF' }}><span>DIST</span></div>
+      <div className="breakdown-segment" style={{ flex: 269, background: BREAKDOWN_COST_COLORS.cif,  color: '#FFF' }}><span>V1: L.C.</span></div>
+      <div className="breakdown-segment" style={{ flex: 122, background: BREAKDOWN_COST_COLORS.tax,  color: '#FFF' }}><span>V4: TAX</span></div>
+      <div className="breakdown-segment" style={{ flex: 18,  background: BREAKDOWN_COST_COLORS.dist, color: '#FFF' }}></div>
     </div>
 
-    {/* ---------- BAR 2: who pays what ---------- */}
-    <span className="label-mono" style={{ color: 'var(--text-tertiary)', marginTop: 'var(--space-lg)', marginBottom: 'var(--space-sm)', display: 'block' }}>HOW THAT RS. 720 IS ABSORBED</span>
+    <span className="label-mono" style={{ color: 'var(--text-tertiary)', marginTop: 'var(--space-lg)', marginBottom: 'var(--space-sm)', display: 'block' }}>HOW THAT RS. 409 IS ABSORBED</span>
     <ChartLegend style={{ marginBottom: '10px' }} items={[
-      { label: 'You pay  Rs. 407',          color: BREAKDOWN_PAY_COLORS.you,  type: 'bar' },
-      { label: 'Govt absorbs  Rs. 100',     color: BREAKDOWN_PAY_COLORS.govt, type: 'bar' },
-      { label: 'CPC loss  Rs. 213',         color: BREAKDOWN_PAY_COLORS.loss, type: 'bar' },
+      { label: 'You pay  Rs. 410',          color: BREAKDOWN_PAY_COLORS.you,  type: 'bar' },
+      { label: 'Cost recovery margin Rs. 1', color: BREAKDOWN_PAY_COLORS.govt, type: 'bar' }
     ]} />
     <div className="breakdown-bar" style={{ minHeight: '50px' }}>
-      <div className="breakdown-segment" style={{ flex: 407, background: BREAKDOWN_PAY_COLORS.you,  color: '#fff', padding: '4px' }}>
-        <span style={{ whiteSpace: 'normal', textAlign: 'center', lineHeight: '1.2', fontSize: 'clamp(0.55rem, 2vw, 0.75rem)' }}>YOU PAY<br/>Rs. 407</span>
-      </div>
-      <div className="breakdown-segment" style={{ flex: 100, background: BREAKDOWN_PAY_COLORS.govt, color: '#000', padding: '4px' }}>
-        <span style={{ whiteSpace: 'normal', textAlign: 'center', lineHeight: '1.2', fontSize: 'clamp(0.55rem, 2vw, 0.75rem)' }}>GOVT<br/>Rs. 100</span>
-      </div>
-      <div className="breakdown-segment" style={{ flex: 213, background: BREAKDOWN_PAY_COLORS.loss, color: '#fff', padding: '4px' }}>
-        <span style={{ whiteSpace: 'normal', textAlign: 'center', lineHeight: '1.2', fontSize: 'clamp(0.55rem, 2vw, 0.75rem)' }}>CPC LOSS<br/>Rs. 213</span>
+      <div className="breakdown-segment" style={{ flex: 410, background: BREAKDOWN_PAY_COLORS.you,  color: '#fff', padding: '4px' }}>
+        <span style={{ whiteSpace: 'normal', textAlign: 'center', lineHeight: '1.2', fontSize: 'clamp(0.55rem, 2vw, 0.75rem)' }}>YOU PAY<br/>Rs. 410</span>
       </div>
     </div>
     <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-tertiary)', marginTop: '10px' }}>
-      Total cost: Rs. 720. You pay Rs. 407. Government absorbs Rs. 100. CPC still loses Rs. 213 per litre.
+      Total true cost: Rs. 409. You pay Rs. 410. There is no massive underlying loss on Petrol 92 under the pure cost-reflective formula.
     </p>
+    <div className="graphic-block-footer" style={{ borderTop: 'none', marginTop: 'var(--space-md)', paddingTop: 'var(--space-xs)' }}>
+      <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>
+        SOURCE: <a href="#cite-12" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>PUBLICFINANCE.LK / MINISTRY OF FINANCE</a>
+      </span>
+      <a href="data_2.json" download className="label-mono" style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textDecoration: 'none', fontWeight: 600 }}>⬇ GET RAW DATA</a>
+    </div>
   </div>
 );
 
@@ -346,28 +326,28 @@ const Chapter01 = () => (
   <section id="viral" className="container section-divider section-pad">
     <div className="content-container">
       <span className="chapter-marker">CHAPTER 01</span>
-      <h2>The number that started a fight.</h2>
-      <p className="body-text">On May 14, 2026, speaking at the Nuwara Eliya District Coordinating Committee meeting, President Dissanayake disclosed that the actual cost to import one litre of diesel had reached Rs. 720. At the time, diesel was being sold at Rs. 392. The government was absorbing Rs. 100 per litre, and the Ceylon Petroleum Corporation was still losing money on every litre it sold.</p>
-      <p className="body-text">On May 31, the price was revised upward to Rs. 407 - a partial correction, but still well below the real cost. As of that revision, the gap between cost and pump price narrows but does not close. The CPC continues to absorb heavy losses on every litre sold.</p>
+      <h2>The formula that hides the truth.</h2>
+      <p className="body-text">On May 14, 2026, speaking at the Nuwara Eliya District Coordinating Committee meeting, President Dissanayake disclosed that the actual cost to import one litre of diesel had reached Rs. 720. He claimed the government was subsidizing the gap to protect the public from a global spike.</p>
+      <p className="body-text">But when we audit those claims using the transparent, IMF-backed pricing formula adopted by Verité Research (PublicFinance.lk), the math breaks down. The government's official formula inflates costs by burying arbitrary profit margins (up to 4%), volatile stockholding fees, and internal refinery inefficiencies into the 'global cost'.</p>
 
       <BreakdownVisual />
 
-      <p className="body-text">That is a genuine loss. The Rs. 720 figure is not an exaggeration - it reflects the real cost of buying oil at USD 100+ per barrel, converting at Rs. 325 to the dollar, shipping it here, and adding taxes and handling. The conflict in the Middle East caused the oil price spike. Sri Lanka's own structural problems explain why the rupee conversion makes it so much worse. When you buy fuel today, you are paying for oil that genuinely costs that much to bring here.</p>
-      <p className="body-text">But the question this story is asking is different. Why does it cost more to bring oil here than to the countries next to us? And why, when the world crisis eventually calms down, do our prices not come back down the way other countries' prices do?</p>
+      <p className="body-text">When you strip those inefficiencies away to find the true, fair cost-reflective price of 92 Octane Petrol, the actual cost to deliver a litre in May 2026 was Rs. 409. The pump price is Rs. 410. The massive loss the CPC claims to absorb is largely a product of its own internal accounting, not just the Middle East conflict.</p>
+      <p className="body-text">But the question this story is asking goes even deeper. Even using the clean formula, why does it cost more to bring oil here than to the countries next to us? Why do our prices consistently outpace the region?</p>
     </div>
 
     <div className="grid-3-col" style={{ margin: 'var(--space-xl) 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
       <div className="stat-block" style={{ borderTop: 'none' }}>
-        <span className="stat-value">Rs. 720</span>
-        <span className="label-mono">Cost to bring 1L of diesel to SL today</span>
+        <span className="stat-value">Rs. 410</span>
+        <span className="label-mono">Petrol 92 pump price (May 2026)</span>
       </div>
       <div className="stat-block" style={{ borderTop: 'none' }}>
-        <span className="stat-value" style={{ color: 'var(--text-secondary)' }}>Rs. 407</span>
-        <span className="label-mono">What you pay at the pump</span>
+        <span className="stat-value" style={{ color: 'var(--text-secondary)' }}>Rs. 409</span>
+        <span className="label-mono">Actual cost-reflective formula price</span>
       </div>
       <div className="stat-block" style={{ borderTop: 'none' }}>
-        <span className="stat-value alert">Rs. 213</span>
-        <span className="label-mono">CPC loss per litre after govt subsidy</span>
+        <span className="stat-value alert">4%</span>
+        <span className="label-mono">Hidden profit margin in Govt formula</span>
       </div>
     </div>
 
@@ -391,9 +371,6 @@ const Chapter01 = () => (
   </section>
 );
 
-// ---- CHAPTER 02: THE FULL PICTURE ----
-// Fix: XAxis now uses dataKey="date" with yearTickFormatter so year labels appear
-// cleanly at January boundaries regardless of how many data points are in the set.
 const Chapter02 = ({ isDesktop }) => {
   const [activeStep, setActiveStep] = useState(0);
   const stepsRef = useRef([]);
@@ -441,7 +418,6 @@ const Chapter02 = ({ isDesktop }) => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-xs)' }}>
               <span className="label-mono">PUMP PRICE VS REAL COST (LKR / LITRE)</span>
             </div>
-            {/* Legend placed above the chart, outside the fixed-height ResponsiveContainer */}
             <ChartLegend style={{ marginBottom: '8px' }} items={[
               { label: 'Pump Price (you pay)',       color: 'var(--accent-red)',     type: 'line', dashed: false },
               { label: 'Real / Formula Cost',        color: 'var(--text-secondary)', type: 'line', dashed: true  },
@@ -449,8 +425,6 @@ const Chapter02 = ({ isDesktop }) => {
             <ResponsiveContainer width="100%" height="82%">
               <LineChart data={getScrollyChartData()} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
-                {/* FIX: use date field + yearTickFormatter so years appear correctly
-                    at January boundaries for every step's filtered data set */}
                 <XAxis
                   dataKey="date"
                   tickFormatter={yearTickFormatter}
@@ -459,7 +433,7 @@ const Chapter02 = ({ isDesktop }) => {
                   tickLine={false}
                   tick={{ fill: 'var(--text-tertiary)', fontSize: 10, fontFamily: 'var(--font-mono)' }}
                 />
-                <YAxis domain={[0, 800]} axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 10, fontFamily: 'var(--font-mono)' }} />
+                <YAxis domain={[0, 600]} axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 10, fontFamily: 'var(--font-mono)' }} />
                 <Tooltip content={<MinimalTooltip />} />
                 {activeStep >= 1 && (
                   <Line type="monotone" dataKey="formula" name="Real Cost" stroke="var(--text-secondary)" strokeWidth={2} strokeDasharray="4 4" dot={false} connectNulls={true} isAnimationActive={true} animationDuration={1200} animationEasing="ease-in-out" />
@@ -467,7 +441,12 @@ const Chapter02 = ({ isDesktop }) => {
                 <Line type="monotone" dataKey="pump" name="Pump Price" stroke="var(--accent-red)" strokeWidth={4} dot={false} isAnimationActive={true} animationDuration={1500} animationEasing="ease-out" />
               </LineChart>
             </ResponsiveContainer>
-            <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)', marginTop: '8px', textAlign: 'right', display: 'block' }}>SOURCE: CEYPETCO / PUBLICFINANCE.LK</span>
+            <div className="graphic-block-footer" style={{ borderTop: 'none', marginTop: '4px', paddingTop: '4px' }}>
+              <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>
+                SOURCE: <a href="#cite-1" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>CEYPETCO / PUBLICFINANCE.LK</a>
+              </span>
+              <a href="data_2.json" download className="label-mono" style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textDecoration: 'none', fontWeight: 600 }}>⬇ GET RAW DATA</a>
+            </div>
           </div>
         </div>
 
@@ -489,7 +468,6 @@ const Chapter02 = ({ isDesktop }) => {
         <p className="body-text">In 2020, the government made prices look cheap by hiding the cost inside debt. In 2026, the cost is genuinely high because of global events.</p>
       </div>
 
-      {/* ---------- Brent Crude vs Pump Price ---------- */}
       <div style={{ width: '100%', margin: 'var(--space-xl) 0' }}>
         <span className="label-mono" style={{ display: 'block', marginBottom: 'var(--space-xs)' }}>BRENT CRUDE (USD) VS SL PUMP PRICE (LKR)</span>
         <ChartLegend style={{ marginBottom: 'var(--space-sm)' }} items={[
@@ -515,20 +493,27 @@ const Chapter02 = ({ isDesktop }) => {
               <Line yAxisId="right" type="monotone" dataKey="pump"  name="Pump Price (LKR)"  stroke="var(--accent-red)"     strokeWidth={3} dot={false} isAnimationActive={true} animationDuration={2000} animationEasing="ease-out" />
             </ComposedChart>
           </ResponsiveContainer>
-          <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)', marginTop: '8px', textAlign: 'right', display: 'block' }}>SOURCE: EIA BRENT CRUDE / CEYPETCO</span>
+          <div className="graphic-block-footer" style={{ borderTop: 'none', marginTop: '4px', paddingTop: '4px' }}>
+            <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>
+              SOURCE: <a href="#cite-5" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>EIA BRENT CRUDE / CEYPETCO</a>
+            </span>
+            <a href="data_2.json" download className="label-mono" style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textDecoration: 'none', fontWeight: 600 }}>⬇ GET RAW DATA</a>
+          </div>
         </div>
       </div>
 
-      {/* ---------- Transition ---------- */}
       <div className="content-container" style={{ margin: 'var(--space-xxl) auto var(--space-xl) 0' }}>
         <h3>But did everyone suffer equally?</h3>
         <p className="body-text">Global prices dictate the baseline, but local policy decides the final blow. When we compare Sri Lanka's pump prices to our immediate neighbors - who all buy from the exact same global market - the structural failure becomes obvious.</p>
       </div>
 
-      {/* ---------- Regional comparison ---------- */}
-      <div style={{ width: '100%', margin: 'var(--space-xl) 0' }}>
-        <span className="label-mono" style={{ display: 'block', marginBottom: 'var(--space-xs)' }}>SRI LANKA VS THE REGION - INDEXED TO JAN 2020 = 100</span>
-        {/* Custom legend replaces default Recharts Legend which was unstyled */}
+      <GraphicBlock 
+        title="Sri Lanka vs The Region" 
+        description="Fuel prices indexed to January 2020 = 100. Despite buying from the same global market, structural traps force a massive divergence."
+        source="GLOBALPETROLPRICES.COM / CBSL"
+        sourceId="2"
+        downloadPath="data_2.json"
+      >
         <ChartLegend style={{ marginBottom: 'var(--space-sm)' }} items={[
           { label: 'Sri Lanka',   color: 'var(--accent-red)', type: 'line', dashed: false },
           { label: 'India',       color: '#3366CC',           type: 'line', dashed: false },
@@ -561,9 +546,8 @@ const Chapter02 = ({ isDesktop }) => {
               <Line type="monotone" dataKey="sriLanka"    name="Sri Lanka"   stroke="var(--accent-red)" strokeWidth={4} dot={{ r: 4, fill: 'var(--bg-primary)', stroke: 'var(--accent-red)', strokeWidth: 2 }} activeDot={{ r: 6 }} isAnimationActive={true} animationDuration={2500} animationEasing="ease-out" />
             </LineChart>
           </ResponsiveContainer>
-          <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)', marginTop: '8px', textAlign: 'right', display: 'block' }}>SOURCE: GLOBALPETROLPRICES.COM / CBSL</span>
         </div>
-      </div>
+      </GraphicBlock>
 
       <div className="pull-quote">
         "Every country in the region felt this crisis. Sri Lanka felt it five times harder. That gap is not bad luck. It is the product of decisions made over twenty years."
@@ -572,8 +556,6 @@ const Chapter02 = ({ isDesktop }) => {
   );
 };
 
-// ---- CHAPTER 03: THE STRUCTURAL TRAP ----
-// Fix: Trap 01 XAxis corrected. Trap 02 reference line labelled. Trap 03 pie labels added as legend.
 const Chapter03 = () => (
   <section id="trap" className="container section-divider section-pad">
     <div className="content-container">
@@ -586,7 +568,6 @@ const Chapter03 = () => (
 
     <div className="horizontal-scroll-container">
 
-      {/* TRAP 01 - Weaker Rupee */}
       <div className="snap-card">
         <span className="label-mono" style={{ color: 'var(--accent-red)' }}>TRAP 01</span>
         <h3 style={{ margin: 'var(--space-md) 0' }}>A Weaker Rupee</h3>
@@ -601,7 +582,6 @@ const Chapter03 = () => (
           <div style={{ height: '160px' }} className="chart-wrapper">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={CHART_3_DATA} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
-                {/* FIX: use date field + yearTickFormatter */}
                 <XAxis
                   dataKey="date"
                   tickFormatter={yearTickFormatter}
@@ -616,11 +596,15 @@ const Chapter03 = () => (
               </LineChart>
             </ResponsiveContainer>
           </div>
-          <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)', marginTop: '8px', display: 'block' }}>SOURCE: CENTRAL BANK OF SRI LANKA</span>
+          <div className="graphic-block-footer" style={{ borderTop: 'none', marginTop: '4px', paddingTop: '4px' }}>
+            <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>
+              SOURCE: <a href="#cite-3" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>CENTRAL BANK OF SRI LANKA</a>
+            </span>
+            <a href="data_2.json" download className="label-mono" style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textDecoration: 'none', fontWeight: 600 }}>⬇ DATA</a>
+          </div>
         </div>
       </div>
 
-      {/* TRAP 02 - Empty Tank */}
       <div className="snap-card">
         <span className="label-mono" style={{ color: 'var(--accent-red)' }}>TRAP 02</span>
         <h3 style={{ margin: 'var(--space-md) 0' }}>An Empty Tank</h3>
@@ -640,7 +624,6 @@ const Chapter03 = () => (
                 <XAxis type="number" domain={[0, 110]} axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 10 }} />
                 <YAxis dataKey="country" type="category" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 10 }} width={75} tickMargin={8} />
                 <Tooltip content={<MinimalTooltip />} cursor={{ fill: 'var(--bg-tertiary)' }} />
-                {/* FIX: labelled reference line so the 90-day standard is explicit */}
                 <ReferenceLine x={90} yAxisId={0} stroke="var(--accent-gold)" strokeDasharray="4 2" label={{ value: 'IEA min.', position: 'right', fill: 'var(--accent-gold)', fontFamily: 'var(--font-mono)', fontSize: 9 }} />
                 <Bar dataKey="days" name="Days of Reserves" barSize={16} isAnimationActive={true} animationDuration={1500}>
                   {CHART_4_DATA.map((entry, index) => (
@@ -650,11 +633,15 @@ const Chapter03 = () => (
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)', marginTop: '8px', display: 'block' }}>SOURCE: IEA / GLOBAL ENERGY MONITOR</span>
+          <div className="graphic-block-footer" style={{ borderTop: 'none', marginTop: '4px', paddingTop: '4px' }}>
+            <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>
+              SOURCE: <a href="#cite-6" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>IEA / GLOBAL ENERGY MONITOR</a>
+            </span>
+            <a href="data_2.json" download className="label-mono" style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textDecoration: 'none', fontWeight: 600 }}>⬇ DATA</a>
+          </div>
         </div>
       </div>
 
-      {/* TRAP 03 - Subsidies Help the Rich */}
       <div className="snap-card">
         <span className="label-mono" style={{ color: 'var(--accent-red)' }}>TRAP 03</span>
         <h3 style={{ margin: 'var(--space-md) 0' }}>Subsidies Help the Rich</h3>
@@ -663,7 +650,6 @@ const Chapter03 = () => (
           <strong>The impact:</strong> The government loses billions a month giving cheap fuel to people who can afford the real price - money that could go to targeted support.
         </p>
         <div style={{ marginTop: 'auto', paddingTop: 'var(--space-lg)' }}>
-          {/* FIX: removed broken inline pie labels; replaced with explicit legend */}
           <ChartLegend style={{ marginBottom: '6px' }} items={[
             { label: 'Wealthiest 30%  ·  uses 70% of fuel', color: 'var(--accent-red)',    type: 'bar' },
             { label: 'Remaining 70%  ·  uses 30% of fuel',  color: 'var(--border-color)',  type: 'bar' },
@@ -690,11 +676,15 @@ const Chapter03 = () => (
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)', marginTop: '8px', display: 'block' }}>SOURCE: ADVOCATA INSTITUTE / WORLD BANK</span>
+          <div className="graphic-block-footer" style={{ borderTop: 'none', marginTop: '4px', paddingTop: '4px' }}>
+            <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>
+              SOURCE: <a href="#cite-8" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>ADVOCATA INSTITUTE / WORLD BANK</a>
+            </span>
+            <a href="data_2.json" download className="label-mono" style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textDecoration: 'none', fontWeight: 600 }}>⬇ DATA</a>
+          </div>
         </div>
       </div>
 
-      {/* TRAP 04 - The Silent Debt */}
       <div className="snap-card">
         <span className="label-mono" style={{ color: 'var(--accent-red)' }}>TRAP 04</span>
         <h3 style={{ margin: 'var(--space-md) 0' }}>The Silent Debt</h3>
@@ -717,15 +707,19 @@ const Chapter03 = () => (
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)', marginTop: '8px', display: 'block' }}>SOURCE: MINISTRY OF FINANCE</span>
+          <div className="graphic-block-footer" style={{ borderTop: 'none', marginTop: '4px', paddingTop: '4px' }}>
+            <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>
+              SOURCE: <a href="#cite-10" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>MINISTRY OF FINANCE</a>
+            </span>
+            <a href="data_2.json" download className="label-mono" style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textDecoration: 'none', fontWeight: 600 }}>⬇ DATA</a>
+          </div>
         </div>
       </div>
 
-      {/* TRAP 05 - Wages Left Behind */}
       <div className="snap-card">
         <span className="label-mono" style={{ color: 'var(--accent-red)' }}>TRAP 05</span>
         <h3 style={{ margin: 'var(--space-md) 0' }}>Wages Left Behind</h3>
-        <p className="body-text" style={{ fontSize: '0.95rem', lineHeight: 1.6 }}>Rs. 137 vs Rs. 407 is only half the story. The real metric is affordability. In 2020, an average daily wage earner could buy 5.5 litres of petrol with a day's work. Today, even with nominal wage increases, they can barely buy 3.5 litres. The price has decoupled from people's earning power.</p>
+        <p className="body-text" style={{ fontSize: '0.95rem', lineHeight: 1.6 }}>Rs. 137 vs Rs. 410 is only half the story. The real metric is affordability. In 2020, an average daily wage earner could buy 5.5 litres of petrol with a day's work. Today, even with nominal wage increases, they can barely buy 3.5 litres. The price has decoupled from people's earning power.</p>
         <p className="body-text" style={{ fontSize: '0.95rem', color: 'var(--text-primary)', borderLeft: '2px solid var(--accent-red)', paddingLeft: 'var(--space-sm)' }}>
           <strong>The impact:</strong> The true cost of fuel is measured in the standard of living, which has steadily collapsed.
         </p>
@@ -744,7 +738,12 @@ const Chapter03 = () => (
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)', marginTop: '8px', display: 'block' }}>SOURCE: DEPT OF CENSUS &amp; STATISTICS</span>
+          <div className="graphic-block-footer" style={{ borderTop: 'none', marginTop: '4px', paddingTop: '4px' }}>
+            <span className="label-mono" style={{ fontSize: '0.6rem', color: 'var(--text-tertiary)' }}>
+              SOURCE: <a href="#cite-11" style={{ color: 'var(--text-secondary)', textDecoration: 'underline' }}>DEPT OF CENSUS &amp; STATISTICS</a>
+            </span>
+            <a href="data_2.json" download className="label-mono" style={{ fontSize: '0.65rem', color: 'var(--accent-red)', textDecoration: 'none', fontWeight: 600 }}>⬇ DATA</a>
+          </div>
         </div>
       </div>
 
@@ -846,7 +845,7 @@ const Chapter05 = () => (
       <div style={{ borderTop: '1px solid var(--border-color)', margin: 'var(--space-xxl) 0 var(--space-md) 0', paddingTop: 'var(--space-xl)' }}>
         <p className="body-text" style={{ fontSize: '1.15rem' }}>Global oil shocks are not going away. The Middle East crisis of 2026 will not be the last disruption Sri Lanka faces.</p>
         <p className="body-text" style={{ fontSize: '1.15rem' }}>The question is whether, when the next one comes, this country will have the reserves, the pricing transparency, and the exchange rate stability to absorb it - or whether it will once again multiply the impact on the people least able to bear it.</p>
-        <p className="body-text" style={{ fontSize: '1.15rem' }}>Right now, a Sri Lankan paying Rs. 407 for diesel is paying more than a Malaysian, a Pakistani, a Thai, and a Filipino are paying in their own currencies for the same litre.</p>
+        <p className="body-text" style={{ fontSize: '1.15rem' }}>Right now, a Sri Lankan paying Rs. 410 for petrol is paying more than a Malaysian, a Pakistani, a Thai, and a Filipino are paying in their own currencies for the same litre.</p>
         <p className="body-text" style={{ fontSize: '1.15rem', color: 'var(--text-primary)' }}>It is the result of decisions made over two decades - by governments of every colour - to keep prices artificially low instead of building the reserves, the exchange rate stability, and the pricing transparency that would have protected everyone when the next crisis arrived. The next crisis is always coming.</p>
       </div>
     </div>
@@ -871,16 +870,11 @@ const CTA = () => (
   </section>
 );
 
-// ---- METHODOLOGY AND FOOTER ----
-// Fix: data.json download link is now a real file.
-// Fix: sources.pdf replaced with an inline numbered source list in the footer.
 const MethodologyAndFooter = () => (
   <footer id="footer" style={{ backgroundColor: '#0A0A0A', borderTop: '1px solid #222222', padding: 'var(--space-xxl) 0 var(--space-xl) 0' }}>
     <div className="container">
 
-      {/* Top grid: about / contact+data / methodology */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'var(--space-xl)', marginBottom: 'var(--space-xxl)' }}>
-
         <div>
           <h3 style={{ color: '#FFFFFF', fontFamily: 'var(--font-serif)', fontSize: '2rem', fontWeight: 300, marginBottom: 'var(--space-sm)' }}>Why Sri Lanka Pays More</h3>
           <p style={{ color: '#A0A0A0', fontFamily: 'var(--font-sans)', fontSize: '0.9rem', lineHeight: '1.7', marginBottom: 'var(--space-md)' }}>A data investigation into why Sri Lanka's fuel prices consistently outpace the region, the structural traps behind the numbers, and what needs to change.</p>
@@ -896,9 +890,7 @@ const MethodologyAndFooter = () => (
           <div>
             <span className="label-mono" style={{ color: '#666666', marginBottom: '8px', display: 'block' }}>DATA</span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {/* data.json is a real file in the repo - see data.json */}
-              <a href="data.json" download style={{ color: '#E5E5E5', textDecoration: 'none', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', alignSelf: 'flex-start' }}>Download Dataset (JSON)</a>
-              {/* Anchor to inline sources section below */}
+              <a href="data_2.json" download style={{ color: '#E5E5E5', textDecoration: 'none', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', alignSelf: 'flex-start' }}>Download Dataset (JSON)</a>
               <a href="#sources" style={{ color: '#E5E5E5', textDecoration: 'none', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', alignSelf: 'flex-start' }}>Full Source Citations</a>
             </div>
           </div>
@@ -906,36 +898,33 @@ const MethodologyAndFooter = () => (
 
         <div>
           <span className="label-mono" style={{ color: '#666666', marginBottom: '8px', display: 'block' }}>METHODOLOGY</span>
-          <p style={{ color: '#888888', fontFamily: 'var(--font-sans)', fontSize: '0.85rem', lineHeight: '1.7', marginBottom: 'var(--space-md)' }}>Fuel price data is sourced from CEYPETCO official revision records and GlobalPetrolPrices.com. Regional comparisons use local currency prices indexed to January 2020. Exchange rate data is from the Central Bank of Sri Lanka. Brent crude data is from the U.S. Energy Information Administration. Import bill figures are from the President's address to the Nuwara Eliya District Coordinating Committee, May 14, 2026. All LKR figures refer to Auto Diesel (Octane 92 petrol where noted).</p>
-          <p style={{ color: '#555555', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', lineHeight: '1.6' }}>Data current as of June 1, 2026. Some figures are official projections, noted in the source file.</p>
+          <p style={{ color: '#888888', fontFamily: 'var(--font-sans)', fontSize: '0.85rem', lineHeight: '1.7', marginBottom: 'var(--space-md)' }}>Fuel price data is sourced from CEYPETCO official revision records and GlobalPetrolPrices.com. Regional comparisons use local currency prices indexed to January 2020. Exchange rate data is from the Central Bank of Sri Lanka. Brent crude data is from the U.S. Energy Information Administration. All tracking indices anchor strictly to Petrol 92 to remove structural conflicts.</p>
+          <p style={{ color: '#555555', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', lineHeight: '1.6' }}>Data current as of June 1, 2026. Formula reconciliations optimized via PublicFinance.lk criteria.</p>
         </div>
-
       </div>
 
-      {/* Sources section - full numbered list */}
       <div id="sources" style={{ borderTop: '1px solid #1A1A1A', paddingTop: 'var(--space-xl)', marginBottom: 'var(--space-xxl)' }}>
         <span className="label-mono" style={{ color: '#666666', marginBottom: 'var(--space-md)', display: 'block' }}>FULL SOURCE CITATIONS</span>
         <ol style={{ color: '#777777', fontFamily: 'var(--font-sans)', fontSize: '0.82rem', lineHeight: '2', paddingLeft: '1.4rem', columns: 'auto 340px', columnGap: 'var(--space-xl)' }}>
-          <li>CEYPETCO, official fuel price revision records, 2020–2026. <span style={{ color: '#555' }}>ceypetco.gov.lk</span></li>
-          <li>GlobalPetrolPrices.com, weekly retail fuel price data for South and Southeast Asia, 2020–2026.</li>
-          <li>Central Bank of Sri Lanka, Daily Exchange Rate Statistics (LKR/USD), 2020–2026. <span style={{ color: '#555' }}>cbsl.gov.lk</span></li>
-          <li>Central Bank of Sri Lanka, External Sector Statistics - monthly trade data, 2026.</li>
-          <li>U.S. Energy Information Administration (EIA), Brent Crude Oil daily spot price, 2020–2026. <span style={{ color: '#555' }}>eia.gov</span></li>
-          <li>International Energy Agency (IEA), "Oil Security Stocks and Emergency Reserves" - 90-day minimum standard guidance. <span style={{ color: '#555' }}>iea.org</span></li>
-          <li>Global Energy Monitor, Asia-Pacific petroleum storage capacity database, 2025.</li>
-          <li>Advocata Institute, "Fuel Subsidy Reform in Sri Lanka: Who Benefits?" - household consumption incidence analysis, 2023. <span style={{ color: '#555' }}>advocata.org</span></li>
-          <li>World Bank, Sri Lanka Household Income and Expenditure Survey (HIES), 2019/2020.</li>
-          <li>Ministry of Finance, Sri Lanka, CPC financial statements and state bank exposure reports, 2019–2026. <span style={{ color: '#555' }}>treasury.gov.lk</span></li>
-          <li>Department of Census and Statistics, Sri Lanka Labour Force Survey - nominal daily wage data, 2020–2025. <span style={{ color: '#555' }}>statistics.gov.lk</span></li>
-          <li>PublicFinance.lk, budget tracker and CPC subsidy expenditure data, 2020–2026.</li>
-          <li>President Anura Kumara Dissanayake, address to the Nuwara Eliya District Coordinating Committee, May 14, 2026 - CPC cost of supply disclosure (Rs. 720/L).</li>
-          <li>Public Utilities Commission of Sri Lanka (PUCSL), fuel pricing formula framework and CEYPETCO regulatory filings.</li>
+          <li id="cite-1">CEYPETCO, official fuel price revision records, 2020–2026. <a href="https://ceypetco.gov.lk/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>ceypetco.gov.lk</a></li>
+          <li id="cite-2">GlobalPetrolPrices.com, weekly retail fuel price data for South and Southeast Asia, 2020–2026. <a href="https://www.globalpetrolprices.com/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>globalpetrolprices.com</a></li>
+          <li id="cite-3">Central Bank of Sri Lanka, Daily Exchange Rate Statistics (LKR/USD), 2020–2026. <a href="https://www.cbsl.gov.lk/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>cbsl.gov.lk</a></li>
+          <li id="cite-4">Central Bank of Sri Lanka, External Sector Statistics - monthly trade data, 2026. <a href="https://www.cbsl.gov.lk/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>cbsl.gov.lk</a></li>
+          <li id="cite-5">U.S. Energy Information Administration (EIA), Brent Crude Oil daily spot price, 2020–2026. <a href="https://www.eia.gov/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>eia.gov</a></li>
+          <li id="cite-6">International Energy Agency (IEA), "Oil Security Stocks and Emergency Reserves" - 90-day minimum standard guidance. <a href="https://www.iea.org/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>iea.org</a></li>
+          <li id="cite-7">Global Energy Monitor, Asia-Pacific petroleum storage capacity database, 2025.</li>
+          <li id="cite-8">Advocata Institute, "Fuel Subsidy Reform in Sri Lanka", 2023. <a href="https://www.advocata.org/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>advocata.org</a></li>
+          <li id="cite-9">World Bank, Sri Lanka Household Income and Expenditure Survey (HIES), 2019/2020.</li>
+          <li id="cite-10">Ministry of Finance, Sri Lanka, CPC financial statements, 2019–2026. <a href="https://www.treasury.gov.lk/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>treasury.gov.lk</a></li>
+          <li id="cite-11">Department of Census and Statistics, Sri Lanka Labour Force Survey, 2020–2025. <a href="https://www.statistics.gov.lk/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>statistics.gov.lk</a></li>
+          <li id="cite-12">PublicFinance.lk, budget tracker and CPC subsidy expenditure data, 2020–2026. <a href="https://publicfinance.lk/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>publicfinance.lk</a></li>
+          <li id="cite-13">President Anura Kumara Dissanayake, address to the Nuwara Eliya DCC, May 14, 2026.</li>
+          <li id="cite-14">Public Utilities Commission of Sri Lanka (PUCSL), fuel pricing formula framework. <a href="https://www.pucsl.gov.lk/" target="_blank" rel="noreferrer" style={{ color: 'var(--accent-gold)' }}>pucsl.gov.lk</a></li>
         </ol>
       </div>
 
     </div>
 
-    {/* Bottom bar */}
     <div className="container" style={{ borderTop: '1px solid #1A1A1A', paddingTop: 'var(--space-lg)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--space-md)' }}>
       <span className="label-mono" style={{ color: '#888888', fontSize: '0.7rem' }}>© 2026 Chatura Dissanayake. All rights reserved. · Data verified as of May 31, 2026.</span>
       <div style={{ display: 'flex', gap: 'var(--space-lg)', alignItems: 'center' }}>
@@ -946,12 +935,19 @@ const MethodologyAndFooter = () => (
   </footer>
 );
 
-// ==========================================
-// MAIN APP COMPONENT
-// ==========================================
 const App = () => {
   const [activeChapter, setActiveChapter] = useState('viral');
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const isEmbed = urlParams.get('embed');
+
+  useEffect(() => {
+    if (isEmbed && window.pym) {
+      const pymChild = new window.pym.Child({ polling: 500 });
+      pymChild.sendHeight();
+    }
+  }, [isEmbed]);
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
@@ -973,6 +969,47 @@ const App = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  if (isEmbed === 'regional') {
+    return (
+      <div style={{ background: 'var(--bg-primary)', padding: 'var(--space-md)' }}>
+        <GraphicBlock 
+          title="Sri Lanka vs The Region" 
+          description="Fuel prices indexed to January 2020 = 100. Despite buying from the same global market, structural traps force a massive divergence."
+          source="GLOBALPETROLPRICES.COM / CBSL"
+          sourceId="2"
+          downloadPath="data_2.json"
+        >
+          <ChartLegend style={{ marginBottom: 'var(--space-sm)' }} items={[
+            { label: 'Sri Lanka',   color: 'var(--accent-red)', type: 'line', dashed: false },
+            { label: 'India',       color: '#3366CC',           type: 'line', dashed: false },
+            { label: 'Pakistan',    color: '#109618',           type: 'line', dashed: false },
+            { label: 'Malaysia',    color: '#FF9900',           type: 'line', dashed: false },
+            { label: 'Thailand',    color: '#990099',           type: 'line', dashed: false },
+            { label: 'Nepal',       color: '#0099C6',           type: 'line', dashed: false },
+            { label: 'Philippines', color: '#7B8C9A',           type: 'line', dashed: false },
+          ]} />
+          <div className="chart-wrapper" style={{ height: '48vh', minHeight: '360px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={CHART_2_DATA} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
+                <XAxis dataKey="date" tickFormatter={yearTickFormatter} interval={0} axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 10, fontFamily: 'var(--font-mono)' }} />
+                <YAxis domain={[50, 400]} axisLine={false} tickLine={false} tick={{ fill: 'var(--text-tertiary)', fontSize: 10, fontFamily: 'var(--font-mono)' }} width={45} tickMargin={8} />
+                <Tooltip content={<MinimalTooltip />} />
+                <Line type="monotone" dataKey="india" stroke="#3366CC" strokeWidth={2} dot={false} isAnimationActive={false} />
+                <Line type="monotone" dataKey="pakistan" stroke="#109618" strokeWidth={2} dot={false} isAnimationActive={false} />
+                <Line type="monotone" dataKey="malaysia" stroke="#FF9900" strokeWidth={2} dot={false} isAnimationActive={false} />
+                <Line type="monotone" dataKey="thailand" stroke="#990099" strokeWidth={2} dot={false} isAnimationActive={false} />
+                <Line type="monotone" dataKey="nepal" stroke="#0099C6" strokeWidth={2} dot={false} isAnimationActive={false} />
+                <Line type="monotone" dataKey="philippines" stroke="#7B8C9A" strokeWidth={2} dot={false} isAnimationActive={false} />
+                <Line type="monotone" dataKey="sriLanka" stroke="var(--accent-red)" strokeWidth={4} dot={{ r: 4, fill: 'var(--bg-primary)', stroke: 'var(--accent-red)', strokeWidth: 2 }} activeDot={{ r: 6 }} isAnimationActive={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </GraphicBlock>
+      </div>
+    );
+  }
 
   return (
     <>

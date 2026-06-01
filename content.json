@@ -2,12 +2,13 @@
   "hero": {
     "title": "Why Sri Lanka Pays More",
     "subtitle": "Six years of numbers. A system built to fail. A global crisis that hit us five times harder than the countries next to us.",
-    "meta": "By Chatura Dissanayake - Published May 31, 2026 - 8 min read"
+    "meta": "By Chatura Dissanayake - Published May 31, 2026 - 8 min read",
+    "architecture": "Graphics architecture inspired by Reuters Graphics Open Source"
   },
   "lede": {
     "marker": "THE STORY",
     "blocks": [
-      { "type": "paragraph", "text": "In January 2020, a litre of petrol cost Rs. 137. Today it costs Rs. 407." },
+      { "type": "paragraph", "text": "In January 2020, a litre of 92 Octane petrol cost Rs. 137. Today it costs Rs. 410 at the pump." },
       { "type": "paragraph", "text": "That is not just a number going up. It is a three-wheeler driver recalculating every morning whether the day is worth starting. It is your grocery bill climbing even when you did not change what you buy." },
       { "type": "paragraph", "text": "When fuel prices go up, the government says \"global oil prices.\" The opposition says \"mismanagement.\" Social media says both, and neither. All three are partially right. This story shows you the actual math." },
       { "type": "paragraph", "text": "Six years of data shows that global events matter - but Sri Lanka consistently pays more than the countries around it for the same barrel of oil. This is not because we are unlucky. It is because of how our own system is built." },
@@ -16,19 +17,19 @@
   },
   "chapter01": {
     "marker": "CHAPTER 01",
-    "title": "The number that started a fight.",
+    "title": "The formula that hides the truth.",
     "content_top": [
-      { "type": "paragraph", "text": "On May 14, 2026, speaking at the Nuwara Eliya District Coordinating Committee meeting, President Dissanayake disclosed that the actual cost to import one litre of diesel had reached Rs. 720. At the time, diesel was being sold at Rs. 392. The government was absorbing Rs. 100 per litre, and the Ceylon Petroleum Corporation was still losing money on every litre it sold." },
-      { "type": "paragraph", "text": "On May 31, the price was revised upward to Rs. 407 - a partial correction, but still well below the real cost. As of that revision, the gap between cost and pump price narrows but does not close. The CPC continues to absorb heavy losses on every litre sold." }
+      { "type": "paragraph", "text": "On May 14, 2026, speaking at the Nuwara Eliya District Coordinating Committee meeting, President Dissanayake disclosed that the actual cost to import one litre of diesel had reached Rs. 720. He claimed the government was subsidizing the gap to protect the public from a global spike." },
+      { "type": "paragraph", "text": "But when we audit those claims using the transparent, IMF-backed pricing formula adopted by Verité Research (PublicFinance.lk), the math breaks down. The government's official formula inflates costs by burying arbitrary profit margins (up to 4%), volatile stockholding fees, and internal refinery inefficiencies into the 'global cost'." }
     ],
     "content_mid": [
-      { "type": "paragraph", "text": "That is a genuine loss. The Rs. 720 figure is not an exaggeration - it reflects the real cost of buying oil at USD 100+ per barrel, converting at Rs. 325 to the dollar, shipping it here, and adding taxes and handling. The conflict in the Middle East caused the oil price spike. Sri Lanka's own structural problems explain why the rupee conversion makes it so much worse. When you buy fuel today, you are paying for oil that genuinely costs that much to bring here." },
-      { "type": "paragraph", "text": "But the question this story is asking is different. Why does it cost more to bring oil here than to the countries next to us? And why, when the world crisis eventually calms down, do our prices not come back down the way other countries' prices do?" }
+      { "type": "paragraph", "text": "When you strip those inefficiencies away to find the true, fair cost-reflective price of 92 Octane Petrol, the actual cost to deliver a litre in May 2026 was Rs. 409. The pump price is Rs. 410. The massive loss the CPC claims to absorb is largely a product of its own internal accounting, not just the Middle East conflict." },
+      { "type": "paragraph", "text": "But the question this story is asking goes even deeper. Even using the clean formula, why does it cost more to bring oil here than to the countries next to us? Why do our prices consistently outpace the region?" }
     ],
     "stats": [
-      { "value": "Rs. 720", "label": "Cost to bring 1L of diesel to SL today", "alert": false },
-      { "value": "Rs. 407", "label": "What you pay at the pump", "alert": false },
-      { "value": "Rs. 213", "label": "CPC loss per litre after govt subsidy", "alert": true }
+      { "value": "Rs. 410", "label": "Petrol 92 pump price (May 2026)", "alert": false },
+      { "value": "Rs. 409", "label": "Actual cost-reflective formula price", "alert": false },
+      { "value": "4%", "label": "Hidden profit margin in Govt formula", "alert": true }
     ],
     "bill_cascade": [
       { "m": "Feb 2026", "v": "USD 98M", "highlight": false },
@@ -162,32 +163,15 @@
   },
   "datasets": {
     "CHART_1_DATA": [
-      { "date": "2020-01", "year": "2020", "pump": 119, "formula": 137 },
-      { "date": "2020-03", "year": "", "pump": 119, "formula": null },
-      { "date": "2021-01", "year": "2021", "pump": 119, "formula": 180 },
-      { "date": "2021-08", "year": "", "pump": 119, "formula": 210 },
-      { "date": "2022-01", "year": "2022", "pump": 148, "formula": 300 },
-      { "date": "2022-03", "year": "", "pump": 198, "formula": null },
-      { "date": "2022-06", "year": "", "pump": 460, "formula": 500 },
-      { "date": "2022-08", "year": "", "pump": 400, "formula": null },
-      { "date": "2022-10", "year": "", "pump": 390, "formula": null },
-      { "date": "2023-01", "year": "2023", "pump": 370, "formula": 380 },
-      { "date": "2023-09", "year": "", "pump": 341, "formula": null },
-      { "date": "2023-11", "year": "", "pump": 356, "formula": null },
-      { "date": "2023-12", "year": "", "pump": 329, "formula": null },
-      { "date": "2024-01", "year": "2024", "pump": 358, "formula": 300 },
-      { "date": "2024-06", "year": "", "pump": 317, "formula": null },
-      { "date": "2024-09", "year": "", "pump": 307, "formula": null },
-      { "date": "2024-12", "year": "", "pump": 286, "formula": null },
-      { "date": "2025-01", "year": "2025", "pump": 286, "formula": 280 },
-      { "date": "2025-04", "year": "", "pump": 286, "formula": null },
-      { "date": "2025-09", "year": "", "pump": 283, "formula": null },
-      { "date": "2025-11", "year": "", "pump": 277, "formula": null },
-      { "date": "2026-01", "year": "2026", "pump": 279, "formula": 400 },
-      { "date": "2026-02", "year": "", "pump": 277, "formula": null },
-      { "date": "2026-03", "year": "", "pump": 382, "formula": 600 },
-      { "date": "2026-04", "year": "", "pump": 382, "formula": null },
-      { "date": "2026-05", "year": "", "pump": 407, "formula": 720 }
+      { "date": "2020-01", "year": "2020", "pump": 137, "formula": 136 },
+      { "date": "2021-01", "year": "2021", "pump": 137, "formula": 135 },
+      { "date": "2022-01", "year": "2022", "pump": 177, "formula": 164 },
+      { "date": "2022-06", "year": "", "pump": 470, "formula": 416 },
+      { "date": "2023-01", "year": "2023", "pump": 370, "formula": 296 },
+      { "date": "2024-01", "year": "2024", "pump": 366, "formula": 340 },
+      { "date": "2025-01", "year": "2025", "pump": 309, "formula": 298 },
+      { "date": "2026-01", "year": "2026", "pump": 294, "formula": 294 },
+      { "date": "2026-05", "year": "", "pump": 410, "formula": 409 }
     ],
     "CHART_2_DATA": [
       { "date": "2020-01", "sriLanka": 100, "india": 100, "pakistan": 100, "malaysia": 100, "thailand": 100, "nepal": 100, "philippines": 100 },
