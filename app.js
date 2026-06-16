@@ -24,14 +24,14 @@ const DATA = {
   flipCards: [
     { id: "bread", front: "A loaf of bread", verdict: "YES", desc: "Wheat is imported and transported by diesel lorry. The mill uses electricity. The bakery oven uses LP Gas or kerosene. The delivery van uses petrol." },
     { id: "fish", front: "Fresh fish from market", verdict: "YES", desc: "A fishing boat burns 60–150 litres of diesel per day at sea. Paraw fish rose 35%, Hurulla rose 68%, Balaya rose 49% in the year to May 2026." },
+    { id: "jackfruit", front: "Homegrown Jackfruit", verdict: "NO", desc: "Grown in the backyard, zero transport, zero processing. The ultimate inflation-proof food." },
     { id: "eggs", front: "A dozen eggs", verdict: "YES", desc: "Poultry farms use fuel for heating brooders, powering feed systems, and ventilation. Egg prices rose 36%." },
     { id: "veg", front: "Vegetables from the pola", verdict: "YES", desc: "Up-country vegetables travel over 200 km by lorry. Cold storage uses electricity." },
+    { id: "software", front: "A software subscription", verdict: "NO", desc: "Digital goods have negligible direct fuel dependencies compared to physical goods. Code travels over fibre optics, not diesel lorries." },
     { id: "tuk", front: "A three-wheeler trip", verdict: "YES", desc: "Three-wheelers run on petrol or diesel. Fares rise instantly. Enormous aggregate impact for low-income households." },
     { id: "van", front: "Your child's school van", verdict: "YES", desc: "School vans run on petrol or diesel. Compounds quickly for families with multiple children." },
     { id: "bulb", front: "Your electricity bill", verdict: "YES", desc: "CEB generates power using fuel oil and diesel during peak demand." },
-    { id: "oil", front: "A bottle of coconut oil", verdict: "YES", desc: "Harvested and transported by lorry, processed using electricity. Shows fuel pushes prices even when the raw commodity falls." },
-    { id: "hospital", front: "Private hospital visit", verdict: "YES", desc: "Ambulances use diesel. Generators use diesel. Healthcare is not immune to energy costs." },
-    { id: "chilli", front: "Dried chillies", verdict: "YES", desc: "Processing, drying, packaging, and countrywide distribution uses energy and diesel lorries." }
+    { id: "oil", front: "A bottle of coconut oil", verdict: "YES", desc: "Harvested and transported by lorry, processed using electricity. Shows fuel pushes prices even when the raw commodity falls." }
   ],
 
   brentVsPump: [
@@ -112,10 +112,16 @@ function setupNav() {
   const fill = document.getElementById('nav-fill');
 
   if (toggle && drawer) {
-    if (window.innerWidth >= 960) {
-      toggle.setAttribute('aria-expanded', 'true');
-      drawer.classList.add('open');
-    }
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (window.innerWidth >= 960) {
+          toggle.setAttribute('aria-expanded', 'false');
+          drawer.classList.remove('open');
+        }
+      }, 200);
+    });
 
     toggle.addEventListener('click', () => {
       const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
@@ -202,12 +208,13 @@ function initSummaryScrollytelling() {
     const totalSteps = lines.length;
     const stepSize = 1 / totalSteps;
 
-    lines.forEach((line, index) => {
-      const stepStart = index * stepSize;
-      const stepEnd = (index + 1) * stepSize;
-      const shouldBeActive =
-        (progress >= stepStart && progress < stepEnd) ||
-        (index === totalSteps - 1 && progress >= 0.99);
+      lines.forEach((line, index) => {
+          const stepStart = index * stepSize;
+          const stepEnd = (index + 1) * stepSize;
+          const shouldBeActive =
+            (progress >= stepStart && progress < stepEnd) ||
+            (index === totalSteps - 1 && progress >= 0.99) ||
+            (index === 0 && progress <= 0);
 
       if (shouldBeActive) {
         line.classList.add('is-active');
@@ -244,11 +251,10 @@ function buildScrollytellingReceipt() {
     row.className = 'receipt-item';
     row.setAttribute('data-index', i);
     row.innerHTML = `
-      <span class="receipt-item-name">${item.name}</span>
-      <div>
-        <span class="receipt-item-old">Rs.${item.old}</span>
-        <span class="receipt-item-new">Rs.${item.new} <span class="receipt-item-pct ${item.down ? 'down' : 'up'}">${item.pct}</span></span>
-      </div>
+      <div class="receipt-item-name">${item.name}</div>
+      <div class="receipt-item-old">Rs.${item.old}</div>
+      <div class="receipt-item-new">Rs.${item.new}</div>
+      <div class="receipt-item-pct ${item.down ? 'down' : 'up'}">${item.pct}</div>
     `;
     listCol.appendChild(row);
   });
@@ -313,9 +319,43 @@ function buildScrollytellingChain() {
   }, { passive: true });
 }
 
+function safeLocalStorage(op, key, val) {
+  try {
+    if (op === 'get') return localStorage.getItem(key);
+    if (op === 'set') localStorage.setItem(key, val);
+  } catch(e) { return null; }
+}
+
 function buildFlipCards() {
   const grid = document.getElementById('flipcards-grid');
   if (!grid) return;
+
+  let score = 0;
+  let cardsPlayed = 0;
+  const scoreEl = document.getElementById('game-score-val');
+  const progressEl = document.getElementById('game-progress-val');
+  const nameInput = document.getElementById('player-name-input');
+  const leaderboardList = document.getElementById('leaderboard-list');
+
+  // Setup mock global leaderboard
+  let mockLeaderboard = JSON.parse(safeLocalStorage('get', 'ceylonDataLeaderboard')) || [
+    { name: "Kasun", score: 90 },
+    { name: "Sarah", score: 80 },
+    { name: "Amila", score: 70 }
+  ];
+
+  function renderLeaderboard() {
+    if (!leaderboardList) return;
+    mockLeaderboard.sort((a, b) => b.score - a.score);
+    leaderboardList.innerHTML = mockLeaderboard.slice(0, 3).map((p, i) => `<li><span>${i+1}. ${p.name}</span> <span>${p.score}</span></li>`).join('');
+  }
+  renderLeaderboard();
+
+  if (nameInput) {
+    const savedName = safeLocalStorage('get', 'ceylonDataPlayerName');
+    if (savedName) nameInput.value = savedName;
+    nameInput.addEventListener('input', (e) => safeLocalStorage('set', 'ceylonDataPlayerName', e.target.value));
+  }
 
   DATA.flipCards.forEach(card => {
     const wrap = document.createElement('div');
@@ -324,40 +364,89 @@ function buildFlipCards() {
     const emojiMap = {
       bread: '🍞', fish: '🐟', eggs: '🥚', veg: '🥬',
       tuk: '🛺', van: '🚌', bulb: '💡', oil: '🫙',
-      hospital: '🏥', chilli: '🌶️'
+      software: '💻', jackfruit: '🍈', chilli: '🌶️'
     };
     const emoji = emojiMap[card.id] || '📦';
 
-    wrap.setAttribute('role', 'button');
-    wrap.setAttribute('tabindex', '0');
-    wrap.setAttribute('aria-expanded', 'false');
+    wrap.setAttribute('role', 'region');
+    wrap.setAttribute('aria-label', card.front);
     wrap.innerHTML = `
       <div class="flipcard-inner">
         <div class="flipcard-front">
-          <div class="flipcard-image" aria-hidden="true"></div>
+          <div class="flipcard-image" aria-hidden="true">
+            <div class="flipcard-blob"></div>
+            <div class="flipcard-emoji">${emoji}</div>
+          </div>
           <div class="flipcard-front-body">
             <div class="flipcard-front-name">${card.front}</div>
+            <div class="flipcard-actions">
+              <button class="btn-guess" data-guess="YES">YES</button>
+              <button class="btn-guess" data-guess="NO">NO</button>
+            </div>
           </div>
         </div>
         <div class="flipcard-back">
-          <div class="flipcard-back-verdict">${card.verdict}</div>
+          <div class="flipcard-back-verdict">${card.verdict}!</div>
+          <div class="flipcard-back-stamp"></div>
           <div class="flipcard-back-desc">${card.desc}</div>
         </div>
       </div>
     `;
     
+    const buttons = wrap.querySelectorAll('.btn-guess');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (wrap.classList.contains('flipped')) return;
+        
+        const guess = e.target.getAttribute('data-guess');
+        const backVerdict = wrap.querySelector('.flipcard-back-verdict');
+        const backStamp = wrap.querySelector('.flipcard-back-stamp');
+        const backCard = wrap.querySelector('.flipcard-back');
+        
+        cardsPlayed++;
+        if (progressEl) progressEl.textContent = cardsPlayed;
+
+        if (guess === card.verdict) {
+          score += 10;
+          if(scoreEl) {
+            scoreEl.textContent = score;
+            scoreEl.classList.add('score-bump');
+            setTimeout(() => scoreEl.classList.remove('score-bump'), 300);
+          }
+          
+          let pName = nameInput && nameInput.value.trim() !== '' ? nameInput.value.trim() : "You";
+          let existing = mockLeaderboard.find(p => p.name === pName);
+          if (existing) {
+            if (score > existing.score) existing.score = score;
+          } else {
+            mockLeaderboard.push({ name: pName, score: score });
+          }
+          safeLocalStorage('set', 'ceylonDataLeaderboard', JSON.stringify(mockLeaderboard));
+          renderLeaderboard();
+          
+          backCard.style.boxShadow = '8px 8px 0 var(--accent-teal)';
+          backVerdict.style.color = 'var(--accent-teal)';
+          backStamp.textContent = '✓ Correct (+10)';
+        } else {
+          backCard.style.boxShadow = '8px 8px 0 var(--accent-red)';
+          backVerdict.style.color = 'var(--accent-red)';
+          backStamp.textContent = '✗ Wrong (0 pts)';
+        }
+        
+        wrap.classList.add('flipped');
+      });
+    });
+
     const toggleCard = () => {
-      const isFlipped = wrap.classList.toggle('flipped');
-      wrap.setAttribute('aria-expanded', isFlipped);
+      if (wrap.classList.contains('flipped')) {
+        wrap.classList.remove('flipped');
+        wrap.setAttribute('aria-expanded', false);
+      }
     };
     
     wrap.addEventListener('click', toggleCard);
-    wrap.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleCard();
-      }
-    });
+    
     grid.appendChild(wrap);
   });
 }
@@ -421,8 +510,15 @@ function initCharts() {
   Chart.defaults.color = COLORS.ink;
 
   const isMobile = window.innerWidth < 600;
-  const tickFontSize = isMobile ? 9 : 11;
-  const legendFontSize = isMobile ? 9 : 11;
+  const tickFontSize = isMobile ? 11 : 11;
+  const legendFontSize = isMobile ? 10 : 11;
+  
+  // Register resize listener for all charts (Audit 9.2)
+  window.addEventListener('resize', () => {
+    for (let id in Chart.instances) {
+      Chart.instances[id].resize();
+    }
+  });
 
   const defaultOptions = {
     responsive: true,
@@ -433,6 +529,7 @@ function initCharts() {
     elements: {
       point: {
         radius: 5,
+        pointStyle: 'rect',
         borderWidth: 0,
         hoverBorderWidth: 0,
         hoverRadius: 7
@@ -442,13 +539,13 @@ function initCharts() {
         tension: 0.3
       }
     },
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { usePointStyle: true, boxWidth: 10, padding: 30, font: { size: legendFontSize } }
-      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { usePointStyle: true, pointStyle: 'rect', boxWidth: 10, padding: 12, font: { size: legendFontSize } }
+        },
       tooltip: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: COLORS.paper,
         titleColor: COLORS.ink,
         bodyColor: COLORS.ink,
         titleFont: { family: "'DM Mono', monospace", size: 13, weight: 'bold' },
@@ -508,8 +605,8 @@ function initCharts() {
         ...defaultOptions,
         scales: {
           x: defaultOptions.scales.x,
-          y: { ...defaultOptions.scales.y, position: 'left', title: { display: true, text: 'USD' } },
-          y1: { ...defaultOptions.scales.y, position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'LKR' } }
+          y: { ...defaultOptions.scales.y, position: 'left', title: { display: false } },
+          y1: { ...defaultOptions.scales.y, position: 'right', grid: { drawOnChartArea: false }, title: { display: false } }
         }
       }
     });
@@ -580,8 +677,9 @@ function initCharts() {
         datasets: [
           { label: 'Sri Lanka', data: DATA.regional.map(d => d.sriLanka), borderColor: COLORS.red, backgroundColor: COLORS.red, pointBackgroundColor: COLORS.red, pointBorderColor: 'transparent', borderWidth: 3, tension: 0.3 },
           { label: 'India', data: DATA.regional.map(d => d.india), borderColor: COLORS.teal, backgroundColor: COLORS.teal, pointBackgroundColor: COLORS.teal, pointBorderColor: 'transparent', borderWidth: 2, borderDash: [4, 4], tension: 0.3 },
-          { label: 'Thailand', data: DATA.regional.map(d => d.thailand), borderColor: '#cccccc', backgroundColor: '#cccccc', pointBackgroundColor: '#cccccc', pointBorderColor: 'transparent', borderWidth: 2, tension: 0.3 },
-          { label: 'Malaysia', data: DATA.regional.map(d => d.malaysia), borderColor: '#A0A0A0', backgroundColor: '#A0A0A0', pointBackgroundColor: '#A0A0A0', pointBorderColor: 'transparent', borderWidth: 2, tension: 0.3 }
+          { label: 'Pakistan', data: DATA.regional.map(d => d.pakistan), borderColor: '#8A2BE2', backgroundColor: '#8A2BE2', pointBackgroundColor: '#8A2BE2', pointBorderColor: 'transparent', borderWidth: 2, tension: 0.3 },
+          { label: 'Thailand', data: DATA.regional.map(d => d.thailand), borderColor: '#DAA520', backgroundColor: '#DAA520', pointBackgroundColor: '#DAA520', pointBorderColor: 'transparent', borderWidth: 2, tension: 0.3 },
+          { label: 'Malaysia', data: DATA.regional.map(d => d.malaysia), borderColor: '#008B8B', backgroundColor: '#008B8B', pointBackgroundColor: '#008B8B', pointBorderColor: 'transparent', borderWidth: 2, tension: 0.3 }
         ]
       },
       options: {
@@ -608,7 +706,7 @@ function initCharts() {
             backgroundColor: '#1A1A1A',
             titleColor: COLORS.paper,
             bodyColor: COLORS.paper,
-            borderColor: 'rgba(247, 245, 240, 0.2)'
+            borderColor: COLORS.gold
           }
         }
       }
@@ -636,13 +734,17 @@ function initMobileExpand() {
     btn.addEventListener('click', (e) => {
       const content = e.target.previousElementSibling;
       const isExpanded = content.classList.contains('is-expanded');
+      const collapsedText = e.target.dataset.collapsed || e.target.innerHTML.replace('Show fewer', 'Read all');
+      const expandedText = e.target.dataset.expanded || e.target.innerHTML.replace('Read all', 'Show fewer');
       
       if (isExpanded) {
         content.classList.remove('is-expanded');
-        e.target.innerHTML = e.target.innerHTML.replace('less &uarr;', 'all &darr;').replace('fixes &uarr;', 'fixes &darr;').replace('arguments &uarr;', 'arguments &darr;');
+        e.target.innerHTML = collapsedText;
+        e.target.setAttribute('aria-expanded', 'false');
       } else {
         content.classList.add('is-expanded');
-        e.target.innerHTML = e.target.innerHTML.replace('&darr;', '&uarr;').replace('all', 'less');
+        e.target.innerHTML = expandedText;
+        e.target.setAttribute('aria-expanded', 'true');
       }
     });
   });
@@ -665,6 +767,16 @@ function initRevealAnimations() {
   }, { threshold: 0.08 });
 
   document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+
+  const heroCue = document.querySelector('.cue-arrow');
+  if (heroCue) {
+    const heroObserver = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) {
+        heroCue.style.animation = 'none';
+      }
+    });
+    heroObserver.observe(document.getElementById('hero'));
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -690,9 +802,7 @@ window.shareStory = () => {
   }
 };
 
-window.shareRegional = () => {
-  window.shareStory();
-};
+window.shareRegional = window.shareStory;
 
 const citations = {
   apa: "Dissanayake, C. (2026). Why is everything so expensive again? [Data Story]. Updated April 30, 2026. Retrieved from https://ceylondata.lk",
@@ -702,7 +812,7 @@ const citations = {
 
 window.switchTab = (tabName) => {
   document.querySelectorAll('.cite-tab').forEach(btn => btn.classList.remove('active'));
-  document.querySelector(`.cite-tab[onclick*="${tabName}"]`).classList.add('active');
+  document.querySelector(`.cite-tab[data-tab="${tabName}"]`).classList.add('active');
   document.getElementById('cite-text').innerText = citations[tabName];
 };
 

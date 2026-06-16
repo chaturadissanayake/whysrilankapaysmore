@@ -82,10 +82,8 @@
     <div class="container">
       <span class="byline-author">By Chatura Dissanayake</span>
       <span class="byline-dot" aria-hidden="true">&middot;</span>
-      <span>Published June 25, 2026</span>
+      <span>Published June 30, 2026</span>
       <span class="byline-dot" aria-hidden="true">&middot;</span>
-      <span>Updated June 10, 2026</span>
-      <span class="byline-pipe" aria-hidden="true">|</span>
       <span>7 min read</span>
     </div>
   </div>
@@ -100,6 +98,10 @@
             <p class="summary-line" data-summary-step="2">Sri Lanka feels every global shock harder than its neighbours, not because the shock is bigger here, but because <mark>five structural problems have never been fixed.</mark></p>
           </div>
         </div>
+        <div class="summary-scroll-cue" aria-hidden="true">
+          <span class="cue-label">Keep scrolling to read</span>
+          <div class="cue-arrow"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -113,11 +115,11 @@
           <div class="receipt-rule" aria-hidden="true">&middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot;</div>
         </div>
         <div id="receipt-items-list" role="list"></div>
-        <div class="receipt-total" id="receipt-total" aria-hidden="true">
+        <div class="receipt-total" id="receipt-total">
           <div class="receipt-rule">, , , , , , , , , , , , , , </div>
           <div class="total-row">
             <span>YOUR BASKET</span>
-            <span class="total-val">MUCH MORE</span>
+            <span class="total-val">+38%</span>
           </div>
           <div class="receipt-rule">&middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot; &middot;</div>
           <div class="receipt-note">Rice went down.<br>Everything that depends on fuel went up.</div>
@@ -137,7 +139,7 @@
   <section id="section-connection" class="section-text">
     <div class="container">
       <p class="section-tag reveal-up">How fuel becomes food</p>
-      <h2 class="section-head reveal-up">You do not need to own a vehicle<br>for fuel prices to affect you.</h2>
+      <h2 class="section-head reveal-up">You do not need to own a vehicle for fuel prices to affect you.</h2>
       <div class="prose reveal-up">
         <p>Most people in Sri Lanka use public transport or walk. So when fuel prices rise, it is easy to think it does not affect you.</p>
         <p>But everything you eat was transported. The fish came on a truck. The vegetables came on a lorry. The rice was milled using energy. The kadé you buy from runs on electricity or kerosene. Every step between the farm and your plate carries a fuel cost.</p>
@@ -169,10 +171,35 @@
   </section>
 
   <section id="section-flipcards" class="section-flipcards">
-    <div class="container container-wide">
+    <div class="container">
       <p class="section-tag reveal-up">The Game</p>
       <h2 class="section-head reveal-up">Can you spot the hidden fuel penalty?</h2>
+      
+      <div class="game-scoreboard reveal-up" id="game-scoreboard">
+        <div class="scoreboard-main">
+          <div class="player-stats">
+            <div class="player-name">
+              <input type="text" id="player-name-input" placeholder="Enter your name to play..." />
+            </div>
+            <div class="player-progress">CARD: <span id="game-progress-val">0</span> / 10</div>
+          </div>
+          <div class="player-score" aria-live="polite" aria-atomic="true">
+            SCORE: <span id="game-score-val">0</span>
+          </div>
+        </div>
+        <details class="global-leaderboard">
+          <summary class="leaderboard-title">VIEW GLOBAL LEADERBOARD</summary>
+          <ul id="leaderboard-list">
+            <!-- Populated by JS -->
+          </ul>
+        </details>
+      </div>
+
+    <div class="container container-wide">
       <div class="cards-grid" id="flipcards-grid" role="list"></div>
+    </div>
+
+    <div class="container">
       <p class="cards-close reveal-up">Every single one. Fuel is inside almost everything. This is why a disruption at a shipping lane in the Middle East ends up in your grocery bill in Colombo.</p>
     </div>
   </section>
@@ -180,7 +207,7 @@
   <section id="section-spark" class="section-text">
     <div class="container">
       <p class="section-tag reveal-up">What triggered this</p>
-      <h2 class="section-head reveal-up">It started in a narrow stretch<br>of water between Iran and Oman.</h2>
+      <h2 class="section-head reveal-up">It started in a narrow stretch of water between Iran and Oman.</h2>
       <div class="prose reveal-up">
         <p>The Strait of Hormuz is 33 kilometres wide at its narrowest point. Roughly 20% of the world's oil passes through it. In February 2026, shipping through the strait became significantly more dangerous. Insurance costs jumped. Several major carriers rerouted. Global oil prices began climbing.</p>
         <p>Brent crude moved from approximately $65 per barrel before the disruption to over $117 by April 2026. An 80% increase in roughly two months. Every country that imports oil felt this. But not every country felt it the same way. What happened in Sri Lanka was different in scale, and the reasons go back much further than February 2026.</p>
@@ -195,16 +222,18 @@
   <section id="section-price" class="section-chart">
     <div class="container">
       <p class="section-tag reveal-up">What is inside the price</p>
-      <h2 class="section-head reveal-up">The global oil price fell.<br>Your pump price did not.</h2>
-      <p class="chart-caption reveal-up">Brent crude (USD/barrel) vs Sri Lanka diesel pump price (LKR/litre), 2020&ndash;2026.</p>
-      <div class="chart-frame reveal-up">
-        <div class="swipe-instruction" aria-hidden="true">&harr; Swipe to view full chart</div>
-        <div class="chart-scroll-wrapper">
-          <div class="chart-canvas-container">
-            <canvas id="chart-brent" role="img" aria-label="Line chart comparing Brent Crude oil prices against Sri Lankan Diesel pump prices from 2020 to 2026, showing a near-instant pass-through in 2026." height="280"></canvas>
+      <h2 class="section-head reveal-up">The global oil price fell. Your pump price did not.</h2>
+      <figure role="figure" aria-label="Line chart comparing Brent Crude oil prices against Sri Lankan Diesel pump prices from 2020 to 2026, showing a near-instant pass-through in 2026." class="reveal-up">
+        <figcaption class="chart-caption">Brent crude (USD/barrel) vs Sri Lanka diesel pump price (LKR/litre), 2020&ndash;2026.</figcaption>
+        <div class="chart-frame">
+          <div class="swipe-instruction" aria-hidden="true">Swipe to view full chart</div>
+          <div class="chart-scroll-wrapper">
+            <div class="chart-canvas-container">
+              <canvas id="chart-brent" height="280"></canvas>
+            </div>
           </div>
         </div>
-      </div>
+      </figure>
       <p class="chart-note reveal-up">In January 2026, Brent was at $65, near its 2020 level. Diesel in Colombo was Rs. 279. By May 2026, Brent had surged to $93 after Hormuz disruptions. Diesel hit Rs. 392. The pass-through was near-instant.</p>
 
       <div class="prose reveal-up">
@@ -212,7 +241,7 @@
       </div>
 
       <div class="breakdown-block reveal-up">
-        <div class="breakdown-label">What you pay at the pump, where it goes</div>
+        <h3 class="sub-head">What you pay at the pump, where it goes</h3>
         <div id="breakdown-bars"></div>
         <p class="breakdown-note">November 2024 breakdown per litre of diesel. Source: PublicFinance.lk / Verité Research.</p>
       </div>
@@ -223,15 +252,17 @@
       </div>
 
       <h3 class="sub-head reveal-up">Does the formula match the pump?</h3>
-      <p class="chart-caption reveal-up">The pricing formula is updated monthly. But the pump price has not always matched it.</p>
-      <div class="chart-frame reveal-up">
-        <div class="swipe-instruction" aria-hidden="true">&harr; Swipe to view full chart</div>
-        <div class="chart-scroll-wrapper">
-          <div class="chart-canvas-container">
-            <canvas id="chart-formula" role="img" aria-label="Line chart demonstrating historical deviations between the actual fuel pump price and the official formula price." height="240"></canvas>
+      <figure role="figure" aria-label="Line chart demonstrating historical deviations between the actual fuel pump price and the official formula price." class="reveal-up">
+        <figcaption class="chart-caption">The pricing formula is updated monthly. But the pump price has not always matched it.</figcaption>
+        <div class="chart-frame">
+          <div class="swipe-instruction" aria-hidden="true">Swipe to view full chart</div>
+          <div class="chart-scroll-wrapper">
+            <div class="chart-canvas-container">
+              <canvas id="chart-formula" height="240"></canvas>
+            </div>
           </div>
         </div>
-      </div>
+      </figure>
       <p class="chart-note reveal-up">When the formula price is higher than the pump price, fuel is being sold below cost ,  a hidden subsidy that builds debt. When it is lower, consumers pay above formula. Both happen. Neither is transparent.</p>
     </div>
   </section>
@@ -239,7 +270,7 @@
   <section id="section-exchange" class="section-chart section-alt">
     <div class="container">
       <p class="section-tag reveal-up">Why Sri Lanka always pays more</p>
-      <h2 class="section-head reveal-up">Same global shock.<br>Sri Lanka pays far more than<br>almost every country around it.</h2>
+      <h2 class="section-head reveal-up">Same global shock. Sri Lanka pays far more than almost every country around it.</h2>
       <p class="section-intro reveal-up">Five structural factors explain most of this difference.</p>
 
       <div class="trap-block reveal-up">
@@ -250,15 +281,17 @@
         <p>Sri Lanka buys oil in US dollars. When the rupee weakens against the dollar, every barrel of oil costs more in rupee terms, even if the global price has not moved at all.</p>
         <p>In January 2020, the exchange rate averaged Rs. 181 per dollar. By October 2022 it had reached Rs. 365. The rupee had lost more than half its value. Today it sits around Rs. 327 to Rs. 331. A $20 rise in the global oil price now costs a Sri Lankan buyer almost twice as many rupees as it did in 2020.</p>
       </div>
-      <p class="chart-caption reveal-up">LKR per USD, 2020&ndash;2026.</p>
-      <div class="chart-frame reveal-up">
-        <div class="swipe-instruction" aria-hidden="true">&harr; Swipe to view full chart</div>
-        <div class="chart-scroll-wrapper">
-          <div class="chart-canvas-container">
-            <canvas id="chart-exchange" role="img" aria-label="Area chart tracking the collapse of the Sri Lankan Rupee from 181 per USD in 2020 to 365 in 2022, settling around 328 by 2026." height="240"></canvas>
+      <figure role="figure" aria-label="Area chart tracking the collapse of the Sri Lankan Rupee from 181 per USD in 2020 to 365 in 2022, settling around 328 by 2026." class="reveal-up">
+        <figcaption class="chart-caption">LKR per USD, 2020&ndash;2026.</figcaption>
+        <div class="chart-frame">
+          <div class="swipe-instruction" aria-hidden="true">Swipe to view full chart</div>
+          <div class="chart-scroll-wrapper">
+            <div class="chart-canvas-container">
+              <canvas id="chart-exchange" height="240"></canvas>
+            </div>
           </div>
         </div>
-      </div>
+      </figure>
       <p class="chart-note reveal-up">The rupee went from Rs. 181 in January 2020 to Rs. 365 by late 2022 ,  a collapse of 102%. Even after partial recovery to Rs. 291 by end-2024, it sits at Rs. 328 in May 2026.</p>
     </div>
   </section>
@@ -340,19 +373,21 @@
   <section id="section-comparison" class="section-chart section-dark">
     <div class="container">
       <p class="section-tag reveal-up">The data across seven countries</p>
-      <h2 class="section-head reveal-up">Same global crisis.<br>Very different pain.</h2>
+      <h2 class="section-head reveal-up">Same global crisis. Very different pain.</h2>
       <div class="prose reveal-up">
         <p>To understand whether Sri Lanka's experience is genuinely unusual, the data from seven countries indexed to January 2020 shows exactly how different the outcomes have been. Every country faced the same global oil price. But the scale of what each country's consumers actually paid tells a different story depending on their structural position.</p>
       </div>
-      <p class="chart-caption reveal-up">Retail fuel prices indexed to January 2020 = 100. When the index reaches 200, consumers paid double what they paid in 2020.</p>
-      <div class="chart-frame chart-frame--tall reveal-up">
-        <div class="swipe-instruction" aria-hidden="true">&harr; Swipe to view full chart</div>
-        <div class="chart-scroll-wrapper">
-          <div class="chart-canvas-container">
-            <canvas id="chart-regional" role="img" aria-label="Line chart showing retail fuel price inflation across 5 Asian countries. Sri Lanka peaks drastically at an index of 343 in 2022, while India, Thailand, and Malaysia remain below 150." height="380"></canvas>
+      <figure role="figure" aria-label="Line chart showing retail fuel price inflation across 5 Asian countries. Sri Lanka peaks drastically at an index of 343 in 2022, while India, Thailand, and Malaysia remain below 150." class="reveal-up">
+        <figcaption class="chart-caption">Retail fuel prices indexed to January 2020 = 100. When the index reaches 200, consumers paid double what they paid in 2020.</figcaption>
+        <div class="chart-frame chart-frame--tall">
+          <div class="swipe-instruction" aria-hidden="true">Swipe to view full chart</div>
+          <div class="chart-scroll-wrapper">
+            <div class="chart-canvas-container">
+              <canvas id="chart-regional" height="380"></canvas>
+            </div>
           </div>
         </div>
-      </div>
+      </figure>
       <div class="peak-callout reveal-up">
         <span class="peak-label">At the June 2022 peak</span>
         <div class="peak-numbers">
@@ -373,7 +408,7 @@
   <section id="section-blame" class="section-chart">
     <div class="container">
       <p class="section-tag reveal-up">What everyone is arguing about</p>
-      <h2 class="section-head reveal-up">Everyone is pointing fingers.<br>Here is what the data actually supports.</h2>
+      <h2 class="section-head reveal-up">Everyone is pointing fingers. Here is what the data actually supports.</h2>
       <div class="mobile-expand-wrapper">
         <div class="mobile-expand-content">
           <div class="blame-list">
@@ -399,7 +434,7 @@
           </div>
           </div>
         </div>
-        <button class="mobile-expand-toggle" aria-expanded="false">Read all arguments</button>
+        <button class="mobile-expand-toggle" aria-expanded="false" data-collapsed="Read all arguments" data-expanded="Show fewer arguments">Read all arguments</button>
       </div>
       <p class="chart-note chart-note--prominent reveal-up">None of these arguments is entirely wrong. None is entirely right. The full picture requires looking at the data across all of them, which is what this story attempts to do.</p>
     </div>
@@ -408,20 +443,22 @@
   <section id="section-squeeze" class="section-chart section-alt">
     <div class="container">
       <p class="section-tag reveal-up">The squeeze</p>
-      <h2 class="section-head reveal-up">Wages fell in real terms.<br>Food prices doubled.</h2>
+      <h2 class="section-head reveal-up">Wages fell in real terms. Food prices doubled.</h2>
       <div class="prose reveal-up">
         <p>A price rise is manageable if wages rise at the same rate or faster. The data from the Central Bank of Sri Lanka's Wage Rate Indices shows clearly that they did not.</p>
         <p>Between January 2022 and September 2022, the real wage index for public sector workers fell from 91 to 59. Not because anyone had their pay cut. But because inflation ,  driven significantly by fuel and food prices ,  destroyed purchasing power faster than wages could adjust.</p>
       </div>
-      <p class="chart-caption reveal-up">Real public sector wage index vs food price index, 2020&ndash;2026. Both indexed to 2020 baseline. When the lines diverge, purchasing power collapses.</p>
-      <div class="chart-frame reveal-up">
-        <div class="swipe-instruction" aria-hidden="true">&harr; Swipe to view full chart</div>
-        <div class="chart-scroll-wrapper">
-          <div class="chart-canvas-container">
-            <canvas id="chart-wages" role="img" aria-label="Line chart showing the severe divergence between the real public wage index, which drops to 59, and the food price index, which spikes to 210 by late 2022." height="260"></canvas>
+      <figure role="figure" aria-label="Line chart showing the severe divergence between the real public wage index, which drops to 59, and the food price index, which spikes to 210 by late 2022." class="reveal-up">
+        <figcaption class="chart-caption">Real public sector wage index vs food price index, 2020&ndash;2026. Both indexed to 2020 baseline. When the lines diverge, purchasing power collapses.</figcaption>
+        <div class="chart-frame">
+          <div class="swipe-instruction" aria-hidden="true">Swipe to view full chart</div>
+          <div class="chart-scroll-wrapper">
+            <div class="chart-canvas-container">
+              <canvas id="chart-wages" height="260"></canvas>
+            </div>
           </div>
         </div>
-      </div>
+      </figure>
       <p class="chart-note reveal-up">By September 2022, the real wage index had fallen to 59.1 while the food index had climbed to 210. Recovery has been partial. The gap remains.</p>
       <div class="stat-callout reveal-up">
         <div class="stat-num">35<small>%</small></div>
@@ -433,7 +470,7 @@
   <section id="section-improved" class="section-chart">
     <div class="container">
       <p class="section-tag reveal-up">What changed since 2022</p>
-      <h2 class="section-head reveal-up">Some things are genuinely better.<br>It is important to say so.</h2>
+      <h2 class="section-head reveal-up">Some things are genuinely better. It is important to say so.</h2>
       <div class="improved-list">
         <div class="improved-item reveal-up">
           <div class="improved-arrow" aria-hidden="true">&uarr;</div>
@@ -470,13 +507,13 @@
   <section id="section-fixes" class="section-fixes">
     <div class="container">
       <p class="section-tag reveal-up">What needs to change</p>
-      <h2 class="section-head reveal-up">Five things that could<br>make this hurt less.</h2>
+      <h2 class="section-head reveal-up">Five things that could make this hurt less.</h2>
       <p class="section-intro reveal-up">These are not opinions. They are structural reforms identified from the data. Each has precedent in comparable economies. Each has an honest obstacle named alongside it.</p>
       <div class="mobile-expand-wrapper">
         <div class="mobile-expand-content">
           <div class="fixes-list" id="fixes-list"></div>
         </div>
-        <button class="mobile-expand-toggle" aria-expanded="false">Read all fixes</button>
+        <button class="mobile-expand-toggle" aria-expanded="false" data-collapsed="Read all fixes" data-expanded="Show fewer fixes">Read all fixes</button>
       </div>
     </div>
   </section>
@@ -484,7 +521,7 @@
   <section id="section-cta" class="section-cta">
     <div class="container">
       <div class="cta-inner reveal-up">
-        <h2 class="cta-head">The data is public.<br>The formula is published.<br>The comparison is available to anyone.</h2>
+        <h2 class="cta-head">The data is public. The formula is published. The comparison is available to anyone.</h2>
         <p class="cta-body">Every number in this story comes from a public source ,  the Department of Census and Statistics, the Central Bank of Sri Lanka, the Public Utilities Commission, PublicFinance.lk, the Ministry of Finance, and international databases. Every chart uses data that you can download and verify yourself.</p>
         <p class="cta-ask"><em>If someone you know is asking why their grocery bill is higher, this story has the answer. If someone is arguing about whose fault it is, this story has a better question: what do we actually fix?</em></p>
         <button class="btn-share btn-share--cta" onclick="shareStory()">Share this story</button>
@@ -497,9 +534,9 @@
       <div class="meta-cite reveal-up">
         <h3 class="meta-heading meta-heading-serif">Cite This Work</h3>
         <div class="cite-tabs">
-          <button class="cite-tab active" onclick="switchTab('apa')">APA</button>
-          <button class="cite-tab" onclick="switchTab('journalistic')">JOURNALISTIC</button>
-          <button class="cite-tab" onclick="switchTab('bibtex')">BIBTEX</button>
+          <button class="cite-tab active" data-tab="apa" onclick="switchTab('apa')">APA</button>
+          <button class="cite-tab" data-tab="journalistic" onclick="switchTab('journalistic')">JOURNALISTIC</button>
+          <button class="cite-tab" data-tab="bibtex" onclick="switchTab('bibtex')">BIBTEX</button>
         </div>
         <div class="cite-box">
           <p id="cite-text">Dissanayake, C. (2026). Why is everything so expensive again? [Data Story]. Updated April 30, 2026. Retrieved from https://ceylondata.lk</p>
@@ -511,7 +548,7 @@
 
   <div class="solo-notice" role="note">
     <div class="container">
-      <p>This is an independent project. Errors are possible and will be corrected. If you find something wrong, please reach out on <a href="https://www.linkedin.com/in/chaturadissanayake/" target="_blank" rel="noopener noreferrer">LinkedIn</a>. I take corrections seriously, as I am doing this alone.</p>
+      <p>This is an independent project. Errors are possible and will be corrected. If you find something wrong, please reach out on <a href="mailto:consultchatura@gmail.com">consultchatura@gmail.com</a>. I take corrections seriously, as I am doing this alone.</p>
     </div>
   </div>
 
