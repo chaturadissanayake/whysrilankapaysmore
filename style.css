@@ -1287,7 +1287,6 @@ mark {
   margin-top: 3rem;
 }
 
-/* GAME SCOREBOARD */
 .game-header {
   display: flex;
   justify-content: space-between;
@@ -1321,7 +1320,6 @@ mark {
   margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
 
-/* GAME CARDS */
 .flipcard-wrap {
   perspective: 1000px;
   aspect-ratio: 4 / 5;
@@ -1363,7 +1361,6 @@ mark {
   color: var(--paper);
 }
 
-/* Lock the toggle state on the front after answering */
 .flipcard-wrap.answered .btn-guess.selected-guess {
   background: var(--ink);
   color: var(--paper);
@@ -1883,7 +1880,6 @@ mark {
   max-width: 800px;
 }
 
-/* --- CTA & META SECTION --- */
 .section-cta {
   padding: 6rem 0 2rem;
   background: var(--paper-warm);
@@ -1977,7 +1973,6 @@ mark {
   color: var(--ink-light);
 }
 
-/* Citation Block Overrides */
 .cite-tabs {
   display: flex;
   justify-content: flex-start;
@@ -2232,7 +2227,6 @@ mark {
   }
   .receipt-header { margin-bottom: 0.5rem; }
 
-  /* Mobile Breakdown Grid */
   .breakdown-row {
     grid-template-columns: 1fr auto;
     grid-template-areas: "label value" "bar bar";
@@ -2351,7 +2345,7 @@ mark {
     scroll-snap-type: x mandatory;
     gap: 1.5rem;
     padding-bottom: 1.5rem;
-    padding-right: calc(18vw + 1rem); /* affordance for scroll */
+    padding-right: calc(18vw + 1rem);
     -webkit-overflow-scrolling: touch;
   }
   .flipcard-wrap {
@@ -2399,52 +2393,43 @@ mark {
     width: auto;
   }
 
-  /* Trap block spacing */
   .trap-block {
     margin: 2rem 0 1rem;
   }
 
-  /* Prose text slightly smaller on mobile */
   .prose {
     font-size: 1.05rem;
   }
 
-  /* Section heads slightly tighter */
   .section-head {
     margin-bottom: 1.5rem;
   }
 
-/* Breakdown bars - ensure labels don't overflow */
   .breakdown-row-label {
     font-size: 0.78rem;
   }
 
-  /* Receipt paper - shadow on small screens */
   .receipt-paper {
     box-shadow: 4px 4px 0 rgba(17,17,17,0.1);
   }
 
-  /* Improved items - reduce gap */
   .improved-item {
     padding: 1.5rem;
     gap: 1rem;
   }
 
-  /* Peak callout - mobile layout */
   .peak-numbers {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
   }
 
-  /* Share row - stack on mobile */
   .share-row {
     flex-direction: column;
     gap: 1.5rem;
     align-items: flex-start;
   }
 
-  /* Citation and Footer styling */
   .cite-box {
     padding: 1.5rem;
   }
@@ -2460,7 +2445,6 @@ mark {
     display: none;
   }
 
-  /* Mobile Collapse Feature */
   .mobile-expand-content {
     max-height: 450px;
     overflow: hidden;
@@ -2498,12 +2482,10 @@ mark {
     font-size: 1.6rem;
   }
 
-  /* Chart note font size */
   .chart-note {
     font-size: 0.8rem;
   }
 
-  /* Chart caption font size */
   .chart-caption {
     font-size: 0.78rem;
   }
@@ -2516,12 +2498,10 @@ mark {
     font-size: 1.75rem;
   }
 
-  /* Breakdown block - reduce padding on mobile */
   .breakdown-block {
     padding: 2rem 1.25rem;
   }
 
-  /* Fix items vertical padding */
   .fix-item {
     padding: 2rem 0;
     gap: 0.75rem;
