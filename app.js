@@ -24,10 +24,8 @@ const DATA = {
   flipCards: [
     { id: "bread", front: "A loaf of bread", verdict: "YES", desc: "Wheat is imported and transported by diesel lorry. The mill uses electricity. The bakery oven uses LP Gas or kerosene. The delivery van uses petrol." },
     { id: "fish", front: "Fresh fish from market", verdict: "YES", desc: "A fishing boat burns 60–150 litres of diesel per day at sea. Paraw fish rose 35%, Hurulla rose 68%, Balaya rose 49% in the year to May 2026." },
-    { id: "jackfruit", front: "Homegrown Jackfruit", verdict: "NO", desc: "Grown in the backyard, zero transport, zero processing. The ultimate inflation-proof food." },
     { id: "eggs", front: "A dozen eggs", verdict: "YES", desc: "Poultry farms use fuel for heating brooders, powering feed systems, and ventilation. Egg prices rose 36%." },
     { id: "veg", front: "Vegetables from the pola", verdict: "YES", desc: "Up-country vegetables travel over 200 km by lorry. Cold storage uses electricity." },
-    { id: "software", front: "A software subscription", verdict: "NO", desc: "Digital goods have negligible direct fuel dependencies compared to physical goods. Code travels over fibre optics, not diesel lorries." },
     { id: "tuk", front: "A three-wheeler trip", verdict: "YES", desc: "Three-wheelers run on petrol or diesel. Fares rise instantly. Enormous aggregate impact for low-income households." },
     { id: "van", front: "Your child's school van", verdict: "YES", desc: "School vans run on petrol or diesel. Compounds quickly for families with multiple children." },
     { id: "bulb", front: "Your electricity bill", verdict: "YES", desc: "CEB generates power using fuel oil and diesel during peak demand." },
@@ -142,6 +140,7 @@ function setupNav() {
   const chapterEl = document.getElementById('nav-chapter');
   const chapterMap = [
     ['section-receipt', 'Your basket'],
+    ['section-glance', 'The short version'],
     ['section-connection', 'Fuel-food'],
     ['section-chain', 'The chain'],
     ['section-flipcards', "What's inside"],
@@ -334,60 +333,31 @@ function buildFlipCards() {
   let cardsPlayed = 0;
   const scoreEl = document.getElementById('game-score-val');
   const progressEl = document.getElementById('game-progress-val');
-  const nameInput = document.getElementById('player-name-input');
-  const leaderboardList = document.getElementById('leaderboard-list');
-
-  // Setup mock global leaderboard
-  let mockLeaderboard = JSON.parse(safeLocalStorage('get', 'ceylonDataLeaderboard')) || [
-    { name: "Kasun", score: 90 },
-    { name: "Sarah", score: 80 },
-    { name: "Amila", score: 70 }
-  ];
-
-  function renderLeaderboard() {
-    if (!leaderboardList) return;
-    mockLeaderboard.sort((a, b) => b.score - a.score);
-    leaderboardList.innerHTML = mockLeaderboard.slice(0, 3).map((p, i) => `<li><span>${i+1}. ${p.name}</span> <span>${p.score}</span></li>`).join('');
-  }
-  renderLeaderboard();
-
-  if (nameInput) {
-    const savedName = safeLocalStorage('get', 'ceylonDataPlayerName');
-    if (savedName) nameInput.value = savedName;
-    nameInput.addEventListener('input', (e) => safeLocalStorage('set', 'ceylonDataPlayerName', e.target.value));
-  }
 
   DATA.flipCards.forEach(card => {
     const wrap = document.createElement('div');
     wrap.className = 'flipcard-wrap reveal-up';
-
-    const emojiMap = {
-      bread: '🍞', fish: '🐟', eggs: '🥚', veg: '🥬',
-      tuk: '🛺', van: '🚌', bulb: '💡', oil: '🫙',
-      software: '💻', jackfruit: '🍈', chilli: '🌶️'
-    };
-    const emoji = emojiMap[card.id] || '📦';
+    
+    let isAnswered = false;
 
     wrap.setAttribute('role', 'region');
     wrap.setAttribute('aria-label', card.front);
     wrap.innerHTML = `
       <div class="flipcard-inner">
         <div class="flipcard-front">
-          <div class="flipcard-image" aria-hidden="true">
-            <div class="flipcard-blob"></div>
-            <div class="flipcard-emoji">${emoji}</div>
-          </div>
+          <div class="flipcard-image" aria-hidden="true"></div>
           <div class="flipcard-front-body">
             <div class="flipcard-front-name">${card.front}</div>
-            <div class="flipcard-actions">
-              <button class="btn-guess" data-guess="YES">YES</button>
-              <button class="btn-guess" data-guess="NO">NO</button>
-            </div>
+          </div>
+          <div class="flipcard-actions">
+            <button class="btn-guess" data-guess="YES">YES</button>
+            <div class="btn-divider"></div>
+            <button class="btn-guess" data-guess="NO">NO</button>
           </div>
         </div>
         <div class="flipcard-back">
+          <div class="flipcard-back-guess" aria-hidden="true"></div>
           <div class="flipcard-back-verdict">${card.verdict}!</div>
-          <div class="flipcard-back-stamp"></div>
           <div class="flipcard-back-desc">${card.desc}</div>
         </div>
       </div>
@@ -397,56 +367,53 @@ function buildFlipCards() {
     buttons.forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (wrap.classList.contains('flipped')) return;
+        
+        if (isAnswered) {
+          wrap.classList.add('flipped');
+          return;
+        }
+        
+        isAnswered = true;
+        wrap.classList.add('answered');
+        e.target.classList.add('selected-guess');
+        
+        buttons.forEach(b => b.style.pointerEvents = 'none');
         
         const guess = e.target.getAttribute('data-guess');
-        const backVerdict = wrap.querySelector('.flipcard-back-verdict');
-        const backStamp = wrap.querySelector('.flipcard-back-stamp');
-        const backCard = wrap.querySelector('.flipcard-back');
+        
+        const guessEl = wrap.querySelector('.flipcard-back-guess');
+        if (guessEl) {
+          if (guess === card.verdict) {
+            guessEl.innerHTML = `Correct - the answer is`;
+          } else {
+            guessEl.innerHTML = `Incorrect - the answer is`;
+          }
+        }
         
         cardsPlayed++;
+        if (cardsPlayed > DATA.flipCards.length) cardsPlayed = DATA.flipCards.length;
         if (progressEl) progressEl.textContent = cardsPlayed;
 
         if (guess === card.verdict) {
           score += 10;
+          if (score > (DATA.flipCards.length * 10)) score = DATA.flipCards.length * 10;
           if(scoreEl) {
             scoreEl.textContent = score;
             scoreEl.classList.add('score-bump');
             setTimeout(() => scoreEl.classList.remove('score-bump'), 300);
           }
-          
-          let pName = nameInput && nameInput.value.trim() !== '' ? nameInput.value.trim() : "You";
-          let existing = mockLeaderboard.find(p => p.name === pName);
-          if (existing) {
-            if (score > existing.score) existing.score = score;
-          } else {
-            mockLeaderboard.push({ name: pName, score: score });
-          }
-          safeLocalStorage('set', 'ceylonDataLeaderboard', JSON.stringify(mockLeaderboard));
-          renderLeaderboard();
-          
-          backCard.style.boxShadow = '8px 8px 0 var(--accent-teal)';
-          backVerdict.style.color = 'var(--accent-teal)';
-          backStamp.textContent = '✓ Correct (+10)';
-        } else {
-          backCard.style.boxShadow = '8px 8px 0 var(--accent-red)';
-          backVerdict.style.color = 'var(--accent-red)';
-          backStamp.textContent = '✗ Wrong (0 pts)';
         }
         
         wrap.classList.add('flipped');
       });
     });
 
-    const toggleCard = () => {
-      if (wrap.classList.contains('flipped')) {
-        wrap.classList.remove('flipped');
-        wrap.setAttribute('aria-expanded', false);
+    wrap.addEventListener('click', () => {
+      if (isAnswered) {
+        wrap.classList.toggle('flipped');
       }
-    };
-    
-    wrap.addEventListener('click', toggleCard);
-    
+    });
+
     grid.appendChild(wrap);
   });
 }
@@ -529,7 +496,7 @@ function initCharts() {
     elements: {
       point: {
         radius: 5,
-        pointStyle: 'rect',
+        pointStyle: 'circle',
         borderWidth: 0,
         hoverBorderWidth: 0,
         hoverRadius: 7
@@ -542,7 +509,7 @@ function initCharts() {
       plugins: {
         legend: {
           position: 'bottom',
-          labels: { usePointStyle: true, pointStyle: 'rect', boxWidth: 10, padding: 12, font: { size: legendFontSize } }
+          labels: { usePointStyle: true, pointStyle: 'circle', boxWidth: 10, padding: 12, font: { size: legendFontSize } }
         },
       tooltip: {
         backgroundColor: COLORS.paper,
